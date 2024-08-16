@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import AppWalletProvider from "@/components/AppWalletProvider";
+import { Provider } from "react-redux";
+import { persistor, WalletStore } from "@/components/redux/store/Store";
+import { PersistGate } from "redux-persist/integration/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,9 +21,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AppWalletProvider>
-          {children}
-        </AppWalletProvider>
+        <div suppressHydrationWarning={false}>
+          <AppWalletProvider >
+            <Provider store={WalletStore}>
+              <PersistGate persistor={persistor}>
+                {children}
+              </PersistGate>
+            </Provider>
+          </AppWalletProvider>
+        </div>
       </body>
     </html>
   );
