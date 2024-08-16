@@ -7,11 +7,11 @@ const Navbar = () => {
             <div className="backdrop-blur-md w-full p-5 flex justify-between font-tektur">
                 <img src={icons} alt="logos" className="size-10" />
                 <div className="flex items-center gap-5">
-                    <NavLink to={'/'} className={({ isActive }) => `text-opacity-50 text-white ${isActive && 'text-opacity-100'}`}>Board</NavLink>
+                    <NavLink to={'/'} className={({ isActive }) => `${isActive ? 'text-opacity-100 text-white' : 'text-white text-opacity-50 '}`}>Board</NavLink>
 
-                    <NavLink to={'/create'} className={({ isActive }) => `text-opacity-50 text-white ${isActive && 'text-opacity-100'}`}>New Token</NavLink>
+                    <NavLink to={'/create'} className={({ isActive }) => `${isActive ? 'text-opacity-100 text-white' : 'text-white text-opacity-50 '}`}>New Token</NavLink>
 
-                    <NavLink to={'/track'} className={({ isActive }) => `text-opacity-50 text-white ${isActive && 'text-opacity-100'}`}>Track Wallets</NavLink>
+                    <NavLink to={'/track'} className={({ isActive }) => `${isActive ? 'text-opacity-100 text-white' : 'text-white text-opacity-50 '}`}>Track Wallets</NavLink>
                 </div>
 
                 <button className="border h-fit my-auto px-7 py-2 border-b-4 border-r-4">Connect</button>
