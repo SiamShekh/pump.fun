@@ -24,8 +24,13 @@ export const TokenListApi = createApi({
                 url: '/popular',
             })
         }),
+        HomeInformission: builder.query({
+            query: () => ({
+                url: '/home-informission',
+            })
+        }),
     }),
 
 });
 
-export const { useTopQuery, useNewQuery, useTopGainerQuery, usePopulerQuery } = TokenListApi;
+export const { useTopQuery, useNewQuery, useTopGainerQuery, usePopulerQuery, useHomeInformissionQuery } = TokenListApi;

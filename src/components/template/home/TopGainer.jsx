@@ -1,7 +1,5 @@
-import { useTopQuery } from "../../rtk/TokenListApi";
 
-const TopGainer = () => {
-    const { data } = useTopQuery(undefined);
+const TopGainer = ({ data }) => {
     return (
         <div>
             <div className="border border-b-4 px-5 py-2">

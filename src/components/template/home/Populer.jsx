@@ -1,7 +1,5 @@
-import { usePopulerQuery } from "../../rtk/TokenListApi";
 
-const Populer = () => {
-    const { data } = usePopulerQuery(undefined);
+const Populer = ({data}) => {
     return (
         <div>
             <div className="border border-b-4 px-5 py-2">

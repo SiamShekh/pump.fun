@@ -1,5 +1,8 @@
+import { useTopQuery } from "../../rtk/TokenListApi";
 
-const ForYou = ({data}) => {
+const SearchItem = () => {
+    const { data } = useTopQuery(undefined);
+    console.log(data);
 
     const TimeStampToTime = (timestamp) => {
         const date = new Date(timestamp);
@@ -76,4 +79,4 @@ const ForYou = ({data}) => {
     );
 };
 
-export default ForYou;
+export default SearchItem;

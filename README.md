@@ -2,15 +2,10 @@
 
 ### **Saturday Routine (August 17, 2024)**
 
-**10:15 AM - 12:15 PM: Work on Hero Section**
-- Ensure the search bar works correctly on the hero image.
-
-**12:15 PM - 12:45 PM: Lunch Break**
-- Have lunch and relax for a bit.
+- Ensure the search bar works correctly on the hero image. 
+``` When user click serach icon retrive to token details page if no data show token not found ```
 
 **12:45 PM - 2:45 PM: Work on Table Section**
-- Implement the search functionality in the table.
-- Ensure that when the search bar is empty, the default results are shown.
 - Implement the functionality where clicking the "Trade" button takes the user to the details page.
 
 **2:45 PM - 3:00 PM: Short Break**

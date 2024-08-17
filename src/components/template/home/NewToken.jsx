@@ -1,7 +1,6 @@
 import { useNewQuery } from "../../rtk/TokenListApi";
 
-const NewToken = () => {
-    const { data } = useNewQuery();
+const NewToken = ({data}) => {
 
     return (
         <div>
@@ -10,7 +9,7 @@ const NewToken = () => {
                 {
                     data?.slice(0, 4).map((item, index) =>
                         <div key={index} className="flex justify-between gap-3 my-2 ">
-                            <img src={`${item?.image_uri}?url=%2Fcoins%2Fmax.png&w=32&q=75`} alt="" className="size-7 rounded-full" />
+                            <img src={`${item?.image_uri}`} alt="" className="size-7 rounded-full" />
                             <p className="text-start w-fit uppercase">{item?.symbol}/SOL</p>
                             <p>${Number(item?.usd_market_cap).toFixed(2)}</p>
                         </div>
