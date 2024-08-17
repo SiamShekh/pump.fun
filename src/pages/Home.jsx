@@ -1,5 +1,9 @@
 import hero_image from "../assets/image/dog-look-at-me.webp";
+import { useTopQuery } from "../components/rtk/TokenListApi";
 const Home = () => {
+    const { data } = useTopQuery(undefined);
+    console.log(data);
+
     return (
         <div>
             <section className="relative h-[50vh]">
@@ -253,7 +257,7 @@ const Home = () => {
                                     </th>
                                 </tr>
                             </tbody>
-                           
+
                         </table>
                     </div>
                 </div>

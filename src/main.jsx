@@ -8,6 +8,8 @@ import { clusterApiUrl } from '@solana/web3.js';
 
 import '@solana/wallet-adapter-react-ui/styles.css';
 import { RouterProvider } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { ReduxStore } from './ReduxStore.jsx';
 
 const wallets = [
   new PhantomWalletAdapter(),
@@ -23,9 +25,9 @@ const AppWrapper = () => {
     <ConnectionProvider endpoint={clusterApiUrl('devnet')}>
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
-          {/* <App /> */}
-          <RouterProvider router={MainRoutes} />
-
+          <Provider store={ReduxStore}>
+            <RouterProvider router={MainRoutes} />
+          </Provider>
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>
