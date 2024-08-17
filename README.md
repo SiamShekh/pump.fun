@@ -2,9 +2,6 @@
 
 ### **Saturday Routine (August 17, 2024)**
 
-**8:00 AM - 10:00 AM: Work on Ember Section**
-- Ensure the "Connect Wallet" button is functional, allowing users to connect their decentralized wallet.
-
 **10:00 AM - 10:15 AM: Short Break**
 - Stretch, walk around, and clear your mind.
 
