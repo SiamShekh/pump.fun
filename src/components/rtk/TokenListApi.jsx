@@ -2,15 +2,30 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const TokenListApi = createApi({
     reducerPath: 'TokenListApi',
-    baseQuery: fetchBaseQuery({ baseUrl: "https://frontend-api.pump.fun/coins?offset=0&limit=500" }),
+    baseQuery: fetchBaseQuery({ baseUrl: "https://block-cors.vercel.app" }),
     endpoints: (builder) => ({
         Top: builder.query({
             query: () => ({
-                url: '&sort=last_trade_timestamp&order=DESC&includeNsfw=true',
+                url: '/list',
             })
-        })
+        }),
+        New: builder.query({
+            query: () => ({
+                url: '/new',
+            })
+        }),
+        TopGainer: builder.query({
+            query: () => ({
+                url: '/top-gainer',
+            })
+        }),
+        Populer: builder.query({
+            query: () => ({
+                url: '/popular',
+            })
+        }),
     }),
-    
+
 });
 
-export const { useTopQuery } = TokenListApi;
+export const { useTopQuery, useNewQuery, useTopGainerQuery, usePopulerQuery } = TokenListApi;

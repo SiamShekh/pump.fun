@@ -8,7 +8,7 @@ const MainLayouts = () => {
                 <Navbar />
             </nav>
 
-            <section className="pt-[15vh] max-w-[1200px] mx-auto z-0 relative">
+            <section className="pt-[15vh] max-w-[1200px] mx-auto z-0 relative pb-10">
                 <Outlet />
             </section>
         </div>
