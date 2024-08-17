@@ -5,12 +5,6 @@
 - Ensure the search bar works correctly on the hero image. 
 ``` When user click serach icon retrive to token details page if no data show token not found ```
 
-**12:45 PM - 2:45 PM: Work on Table Section**
-- Implement the functionality where clicking the "Trade" button takes the user to the details page.
-
-**2:45 PM - 3:00 PM: Short Break**
-- Refresh yourself with some water or a quick walk.
-
 **3:00 PM - 5:00 PM: Work on Details Page**
 - Implement the chart and buy/sell form on the details page.
 - Work on fetching comments and displaying them, including escaping the content if necessary.

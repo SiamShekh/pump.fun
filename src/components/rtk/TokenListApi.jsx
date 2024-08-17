@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const TokenListApi = createApi({
     reducerPath: 'TokenListApi',
     baseQuery: fetchBaseQuery({ baseUrl: "https://block-cors.vercel.app" }),
+    // baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:4000" }),
     endpoints: (builder) => ({
         Top: builder.query({
             query: () => ({
@@ -29,8 +30,14 @@ export const TokenListApi = createApi({
                 url: '/home-informission',
             })
         }),
+        ChartInfo: builder.query({
+            query: (arg) => ({
+                url: '/charts',
+                params: {ca: arg} 
+            })
+        }),
     }),
 
 });
 
-export const { useTopQuery, useNewQuery, useTopGainerQuery, usePopulerQuery, useHomeInformissionQuery } = TokenListApi;
+export const { useChartInfoQuery,useTopQuery, useNewQuery, useTopGainerQuery, usePopulerQuery, useHomeInformissionQuery } = TokenListApi;
