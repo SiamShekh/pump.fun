@@ -2,9 +2,6 @@
 
 ### **Saturday Routine (August 17, 2024)**
 
-**10:00 AM - 10:15 AM: Short Break**
-- Stretch, walk around, and clear your mind.
-
 **10:15 AM - 12:15 PM: Work on Hero Section**
 - Make the search bar overlay on the image functional using an API.
 - Ensure the search bar works correctly on the hero image.
