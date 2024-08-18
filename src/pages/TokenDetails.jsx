@@ -22,7 +22,7 @@ const TokenDetails = () => {
     return (
         <div className="mt-10 px-5">
             <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-3  lg:justify-center items-center lg:items-start">
-                <div className="border overflow-hidden p-3 h-fit">
+                <div className="border overflow-hidden p-3 h-fit bg-black">
                     <p className="font-tektur underline">Order Book</p>
                     <div className="overflow-x-auto">
                         <table className="table">
@@ -48,7 +48,7 @@ const TokenDetails = () => {
                     </div>
                 </div>
 
-                <div className="md:col-span-2 p-[1px] bg-white hidden lg:block relative h-fit">
+                <div className="md:col-span-2 p-[1px] bg-white hidden md:block relative h-fit">
                     <div className="flex gap-3 text-black font-poppins p-3">
                         <p className="capitalize">{data?.SignleData.name}</p>
                         <p className="capitalize">Symbol: {data?.SignleData.symbol}</p>
@@ -56,7 +56,7 @@ const TokenDetails = () => {
                     </div>
                     <TradingChart data={data?.chart} isFetching={isFetching} />
                 </div>
-                <div className="md:col-span-3 lg:col-span-1 mx-auto w-full border h-full p-5">
+                <div className="md:col-span-3 lg:col-span-1 mx-auto w-full border h-full p-5 bg-black">
                     <div className="rounded-2xl">
                         <div className="flex items-center gap-4">
                             <button onClick={() => setBuy(true)} className={`flex-1 border border-b-4 border-r-4 py-2 font-tektur text-xl border-green-500 uppercase hover:border-black ${isBuy && 'bg-green-500'}`}>Buy</button>
@@ -120,25 +120,53 @@ const TokenDetails = () => {
                 </div>
             </div>
 
-            <div className="mt-9">
-                {
-                    data?.Reply.map((item, index) =>
-                        <div key={index} className="flex justify-between gap-3 mt-1 w-full">
-                            <div className="bg-gray-700 p-3 w-full">
-                                <div className="flex gap-3">
-                                    {
-                                        item?.profile_image == null ? 
-                                        <p className="size-7 text-center text-black font-tektur font-black bg-white border">{item?.user?.slice(0,1)}</p> : 
-                                        <img src={item?.profile_image} alt="profile image" className="size-7 border" />
-                                    }
-                                    <p className="text-xs font-poppins">@{item?.username} • {formatTimestamp(item?.timestamp)}</p>
+            <div className="mt-9 flex justify-between flex-col-reverse md:flex-row gap-3">
+                <div className="flex-1">
+                    {
+                        data?.Reply.map((item, index) =>
+                            <div key={index} className="flex justify-between gap-3 mt-1 w-full bg-black shadow-2xl">
+                                <div className=" p-3 w-full">
+                                    <div className="flex gap-3">
+                                        {
+                                            item?.profile_image == null ?
+                                                <p className="size-7 text-center text-black font-tektur font-black bg-white border">{item?.user?.slice(0, 1)}</p> :
+                                                <img src={item?.profile_image} alt="profile image" className="size-7 border" />
+                                        }
+                                        <p className="text-xs font-poppins">@{item?.username} • {formatTimestamp(item?.timestamp)}</p>
+                                    </div>
+                                    <p className="text-xs mt-3 font-poppins">{item?.text}</p>
                                 </div>
-                                <p className="text-xs mt-3 font-poppins">{item?.text}</p>
-                            </div>
-                        </div>)
-                }
+                            </div>)
+                    }
+                </div>
+                <div className="flex-1">
+                    <div className="border overflow-hidden p-3 h-fit bg-black">
+                        <p className="font-tektur underline">Holder</p>
+                        <div className="overflow-x-auto">
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th>Address</th>
+                                        <th>Amount({data?.SignleData?.symbol})</th>
+                                        <th>Percentage</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        data?.Holder?.slice(0, 8).map((item, index) =>
+                                            <tr key={index}>
+                                                <td><a className="hover:underline" target="_blank" href={`https://solscan.io/account/${item?.address}`}>{item?.address?.slice(0, 5) + "..."}</a></td>
+                                                <td>{Number(item?.amount).toFixed(2)}</td>
+                                                <td><a className="hover:underline" target="_blank" href={`https://solscan.io/account/${item?.percentage}`}>{item?.percentage}%</a></td>
+                                            </tr>
+                                        )
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-
         </div>
     );
 };
