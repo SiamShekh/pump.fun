@@ -24,7 +24,6 @@ const AppWrapper = () => {
   return (
     <ConnectionProvider endpoint={clusterApiUrl('mainnet-beta')}>
       <WalletProvider wallets={wallets} autoConnect>
-
         <WalletModalProvider>
           <Provider store={ReduxStore}>
             <RouterProvider router={MainRoutes} />
@@ -32,8 +31,6 @@ const AppWrapper = () => {
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>
-    // <div className="">This is the dev</div>
-
   );
 };
 
