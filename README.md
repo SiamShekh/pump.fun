@@ -5,13 +5,6 @@
 - Ensure the search bar works correctly on the hero image. 
 ``` When user click serach icon retrive to token details page if no data show token not found ```
 
-**3:00 PM - 5:00 PM: Work on Details Page**
-- Implement the chart and buy/sell form on the details page.
-- Work on fetching comments and displaying them, including escaping the content if necessary.
-
-**5:00 PM - 5:30 PM: Afternoon Snack/Break**
-- Take a break, have a snack, and relax.
-
 **5:30 PM - 7:30 PM: Work on Profile Section**
 - Implement the virtual wallet details (public key, private key, API key).
 - Display the user's trading history, tokens, and interests in the profile section.

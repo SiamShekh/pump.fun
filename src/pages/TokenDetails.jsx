@@ -22,7 +22,7 @@ const TokenDetails = () => {
     return (
         <div className="mt-10 px-5">
             <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-3  lg:justify-center items-center lg:items-start">
-                <div className="border border-b-4 border-r-4 p-3 h-fit">
+                <div className="border overflow-hidden p-3 h-fit">
                     <p className="font-tektur underline">Order Book</p>
                     <div className="overflow-x-auto">
                         <table className="table">
@@ -38,7 +38,7 @@ const TokenDetails = () => {
                                     data?.Trade?.slice(0, 8).map((item, index) =>
                                         <tr key={index}>
                                             <td><a className="hover:underline" target="_blank" href={`https://solscan.io/account/${item?.user}`}>{item?.user?.slice(0, 5) + "..."}</a></td>
-                                            <td>{Number(item?.token_amount).toString().slice(0, 10) + "..."}</td>
+                                            <td>{Number(item?.token_amount)}</td>
                                             <td><a className="hover:underline" target="_blank" href={`https://solscan.io/account/${item?.signature}`}>{item?.signature?.slice(0, 5) + "..."}</a></td>
                                         </tr>
                                     )
@@ -56,8 +56,8 @@ const TokenDetails = () => {
                     </div>
                     <TradingChart data={data?.chart} isFetching={isFetching} />
                 </div>
-                <div className="md:col-span-3 lg:col-span-1 mx-auto w-full">
-                    <div className="bg-[#10173d] p-5 rounded-2xl">
+                <div className="md:col-span-3 lg:col-span-1 mx-auto w-full border h-full p-5">
+                    <div className="rounded-2xl">
                         <div className="flex items-center gap-4">
                             <button onClick={() => setBuy(true)} className={`flex-1 border border-b-4 border-r-4 py-2 font-tektur text-xl border-green-500 uppercase hover:border-black ${isBuy && 'bg-green-500'}`}>Buy</button>
                             <button onClick={() => setBuy(false)} className={`flex-1 border border-b-4 border-r-4 py-2 font-tektur text-xl border-red-500 uppercase hover:border-black ${!isBuy && 'bg-red-500'}`}>sell</button>
