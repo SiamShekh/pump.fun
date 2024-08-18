@@ -30,14 +30,15 @@ export const TokenListApi = createApi({
                 url: '/home-informission',
             })
         }),
-        ChartInfo: builder.query({
+        Details: builder.query({
             query: (arg) => ({
-                url: '/charts',
-                params: {ca: arg} 
+                url: '/details',
+                params: {mint: arg} 
             })
         }),
+        
     }),
 
 });
 
-export const { useChartInfoQuery,useTopQuery, useNewQuery, useTopGainerQuery, usePopulerQuery, useHomeInformissionQuery } = TokenListApi;
+export const { useDetailsQuery,useTopQuery, useNewQuery, useTopGainerQuery, usePopulerQuery, useHomeInformissionQuery } = TokenListApi;

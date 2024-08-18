@@ -1,14 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { createChart } from 'lightweight-charts';
-import { useChartInfoQuery } from '../../rtk/TokenListApi';
 
 
 
-const TradingChart = ({contract}) => {
-    console.log(contract);
+const TradingChart = ({data, isFetching}) => {
     
     const chartContainerRef = useRef();
-    const { data, isFetching } = useChartInfoQuery(contract);
+    // const { data, isFetching } = useChartInfoQuery(contract);
 
     useEffect(() => {
         const chart = createChart(chartContainerRef.current, {

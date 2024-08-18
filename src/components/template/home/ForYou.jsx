@@ -61,7 +61,7 @@ const ForYou = ({data}) => {
                                         <td>{TimeStampToTime(item?.created_timestamp)}</td>
                                         <td>{TimeStampToTime(item?.last_trade_timestamp)}</td>
                                         <th>
-                                            <a href={`/details/:${item?.mint}`} className="btn btn-ghost btn-xs">trade</a>
+                                            <a href={`/details/${item?.mint}`} className="btn btn-ghost btn-xs">trade</a>
                                         </th>
                                     </tr>
                                 )
