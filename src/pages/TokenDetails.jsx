@@ -3,6 +3,14 @@ import TradingChart from "../components/template/details/TradingChart";
 import { useDetailsQuery } from "../components/rtk/TokenListApi";
 import { useState } from "react";
 
+function formatTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    const day = date.getDate();
+    const month = date.toLocaleString('en-US', { month: 'short' });
+
+    return `${day} - ${month}`;
+}
+
 const TokenDetails = () => {
     const contractParams = useParams().id;
     const [isSol, setSol] = useState(false);
@@ -12,9 +20,9 @@ const TokenDetails = () => {
     const { data, isFetching } = useDetailsQuery(contractParams);
 
     return (
-        <div className="mt-10">
-            <div className="flex justify-between gap-10">
-                <div className="flex-1 border border-b-4 border-r-4 p-3 h-fit">
+        <div className="mt-10 px-5">
+            <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-3  lg:justify-center items-center lg:items-start">
+                <div className="border border-b-4 border-r-4 p-3 h-fit">
                     <p className="font-tektur underline">Order Book</p>
                     <div className="overflow-x-auto">
                         <table className="table">
@@ -27,11 +35,11 @@ const TokenDetails = () => {
                             </thead>
                             <tbody>
                                 {
-                                    data?.Trade?.slice(0,8).map((item, index) =>
+                                    data?.Trade?.slice(0, 8).map((item, index) =>
                                         <tr key={index}>
-                                            <td><a className="hover:underline" target="_blank" href={`https://solscan.io/account/${item?.user}`}>{item?.user?.slice(0,5)+"..."}</a></td>
-                                            <td>{Number(item?.token_amount).toString().slice(0,10)+"..."}</td>
-                                            <td><a className="hover:underline" target="_blank" href={`https://solscan.io/account/${item?.signature}`}>{item?.signature?.slice(0,5)+"..."}</a></td>
+                                            <td><a className="hover:underline" target="_blank" href={`https://solscan.io/account/${item?.user}`}>{item?.user?.slice(0, 5) + "..."}</a></td>
+                                            <td>{Number(item?.token_amount).toString().slice(0, 10) + "..."}</td>
+                                            <td><a className="hover:underline" target="_blank" href={`https://solscan.io/account/${item?.signature}`}>{item?.signature?.slice(0, 5) + "..."}</a></td>
                                         </tr>
                                     )
                                 }
@@ -40,7 +48,7 @@ const TokenDetails = () => {
                     </div>
                 </div>
 
-                <div className="flex-[2] p-[1px] bg-white relative h-fit">
+                <div className="md:col-span-2 p-[1px] bg-white hidden lg:block relative h-fit">
                     <div className="flex gap-3 text-black font-poppins p-3">
                         <p className="capitalize">{data?.SignleData.name}</p>
                         <p className="capitalize">Symbol: {data?.SignleData.symbol}</p>
@@ -48,7 +56,7 @@ const TokenDetails = () => {
                     </div>
                     <TradingChart data={data?.chart} isFetching={isFetching} />
                 </div>
-                <div className="flex-1">
+                <div className="md:col-span-3 lg:col-span-1 mx-auto w-full">
                     <div className="bg-[#10173d] p-5 rounded-2xl">
                         <div className="flex items-center gap-4">
                             <button onClick={() => setBuy(true)} className={`flex-1 border border-b-4 border-r-4 py-2 font-tektur text-xl border-green-500 uppercase hover:border-black ${isBuy && 'bg-green-500'}`}>Buy</button>
@@ -100,9 +108,6 @@ const TokenDetails = () => {
                         {
                             data?.SignleData?.twitter && <a href={data?.SignleData?.twitter} className="font-tektur text-xl">X (Twitter)</a>
                         }
-                        {
-                            data?.SignleData?.website && <a href={data?.SignleData?.website} className="font-tektur text-xl">Website</a>
-                        }
                     </div>
 
                     <div className="flex justify-between mt-3 gap-3">
@@ -115,7 +120,25 @@ const TokenDetails = () => {
                 </div>
             </div>
 
-            <div className=""></div>
+            <div className="mt-9">
+                {
+                    data?.Reply.map((item, index) =>
+                        <div key={index} className="flex justify-between gap-3 mt-1 w-full">
+                            <div className="bg-gray-700 p-3 w-full">
+                                <div className="flex gap-3">
+                                    {
+                                        item?.profile_image == null ? 
+                                        <p className="size-7 text-center text-black font-tektur font-black bg-white border">{item?.user?.slice(0,1)}</p> : 
+                                        <img src={item?.profile_image} alt="profile image" className="size-7 border" />
+                                    }
+                                    <p className="text-xs font-poppins">@{item?.username} • {formatTimestamp(item?.timestamp)}</p>
+                                </div>
+                                <p className="text-xs mt-3 font-poppins">{item?.text}</p>
+                            </div>
+                        </div>)
+                }
+            </div>
+
         </div>
     );
 };
