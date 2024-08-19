@@ -1,50 +1,79 @@
-import React from 'react';
-import { useWallet } from '@solana/wallet-adapter-react';
-import { Connection, PublicKey, SystemProgram, Transaction } from '@solana/web3.js';
+import { Link, useParams } from "react-router-dom";
+import { useProfileQuery } from "../components/rtk/TokenListApi";
+import pump from "../assets/image/pump.png";
 
 const Profile = () => {
-    const { publicKey, sendTransaction } = useWallet();
-    const RPC_ENDPOINT = "https://rpc.helius.xyz/?api-key=40c3ebe4-c797-45a3-895e-b3cc09a24bf3";
+    const mint = useParams().mint;
+    const { data, isFetching } = useProfileQuery(mint);
 
-    const connection = new Connection(RPC_ENDPOINT, 'confirmed');
+    const uniqueBalance = data?.balance?.filter((item, index, self) =>
+        index === self.findIndex((t) => t.symbol === item.symbol)
+    );
 
-    const sendSol = async () => {
-        if (!publicKey) {
-            alert('Please connect your wallet first.');
-            return;
-        }
-
-        const recipientAddress = '7p5tiBiLsE5qEHjoJ2ffBvbuYqCuWZCazwsSmwFojV9X';
-        const amount = 0.001;
-
-        try {
-            const transaction = new Transaction().add(
-                SystemProgram.transfer({
-                    fromPubkey: publicKey,
-                    toPubkey: new PublicKey(recipientAddress),
-                    lamports: amount * 1e9, // Convert SOL to lamports
-                })
-            );
-
-            const latestBlockhash = await connection.getLatestBlockhash('finalized');
-            transaction.recentBlockhash = latestBlockhash.blockhash;
-            transaction.feePayer = publicKey;
-
-            // Sign the transaction with the connected wallet
-            const signature = await sendTransaction(transaction, connection);
-            await connection.confirmTransaction(signature, 'processed');
-
-            console.log('Transaction sent with signature:', signature);
-            alert(`Transaction sent with signature: ${signature}`);
-        } catch (error) {
-            console.error('Transaction failed:', error);
-            alert(`Transaction failed: ${error.message}`);
-        }
-    };
 
     return (
-        <div>
-            <button onClick={sendSol}>Send 0.001 SOL</button>
+        <div className="min-h-screen mt-10 m-5">
+            <div className="flex items-center gap-10 flex-col md:flex-row">
+                <img src={pump} alt="profile logo" className="size-40" />
+                <div className="">
+                    <p className="text-2xl mb-10">Address: {mint.slice(0,12)+"..."}</p>
+                    <Link to={`https://solscan.io/account/${mint}`} className="border border-b-4 border-r-4 px-8 py-3">View on Explorer</Link>
+                </div>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-3 mt-10">
+                {
+                    isFetching ?
+                        <>
+                            <div className="skeleton h-60"></div>
+                            <div className="skeleton h-60"></div>
+                        </> : <>
+
+                            <div className="">
+                                <p className="font-tektur text-xl md:text-3xl">Holding Balance</p>
+                                {
+                                    uniqueBalance?.map((item, index) =>
+                                        <div key={index} className="border border-r-4 border-b-4 p-5 flex gap-5 items-center justify-between flex-col md:flex-row">
+                                            <div className="flex gap-5 items-center">
+                                                <div className="avatar">
+                                                    <div className="mask mask-squircle w-12 md:w-16">
+                                                        <img src={item?.image_uri} />
+                                                    </div>
+                                                </div>
+                                                <div className="">
+                                                    <p className="font-poppins md:text-2xl">{item?.name}</p>
+                                                    <p className="font-poppins md:text-2xl">{item?.balance}</p>
+                                                </div>
+                                            </div>
+                                            <Link to={`/details/${mint}`} className="border border-b-4 border-r-4 px-8 py-3 text-xs">View Coin</Link>
+
+                                        </div>)
+                                }
+                            </div>
+                            <div className="">
+                                <p className="font-tektur  text-xl md:text-3xl">Created Coin</p>
+                                {
+                                    data?.created?.map((item, index) =>
+                                        <div key={index} className="border border-r-4 border-b-4 p-5 flex gap-5 items-center justify-between flex-col md:flex-row">
+                                            <div className="flex gap-5 items-center">
+                                                <div className="avatar">
+                                                    <div className="mask mask-squircle w-12 md:w-16">
+                                                        <img src={item?.image_uri} />
+                                                    </div>
+                                                </div>
+                                                <div className="">
+                                                    <p className="font-poppins md:text-2xl">{item?.name}</p>
+                                                    <p className="font-poppins">Marketcup: ${Number(item?.usd_market_cap).toFixed(2)}</p>
+                                                </div>
+                                            </div>
+                                            <Link to={`/details/${mint}`} className="border border-b-4 border-r-4 px-8 py-3 text-xs">View Coin</Link>
+
+                                        </div>)
+                                }
+                            </div>
+                        </>
+                }
+            </div>
         </div>
     );
 };

@@ -148,7 +148,7 @@ const TokenDetails = () => {
                                                         <img src={"https://upload.wikimedia.org/wikipedia/en/thumb/b/b9/Solana_logo.png/252px-Solana_logo.png"} alt="logo" className="size-8 rounded-full border" />
                                                     </> : <>
                                                         <p className="uppercase font-poppins">{data?.SignleData?.symbol}</p>
-                                                        <img src={data?.SignleData?.profile_image} alt="logo" className="size-8 rounded-full border" />
+                                                        <img src={data?.SignleData?.image_uri} alt="logo" className="size-8 rounded-full border" />
                                                     </>
                                                 }
                                             </div>
@@ -167,7 +167,7 @@ const TokenDetails = () => {
                                     </div>
 
                                     <div className="flex justify-between mt-3 gap-3">
-                                        <img src={data?.SignleData?.profile_image} alt="" className="size-16" />
+                                        <img src={data?.SignleData?.image_uri} alt="" className="size-16" />
                                         <div className="flex-1">
                                             <p className="font-tektur uppercase">{data?.SignleData?.symbol}/SOL</p>
                                             <p className="font-poppins text-xs line-clamp-3">{data?.SignleData?.description}</p>
@@ -192,9 +192,9 @@ const TokenDetails = () => {
                                             <div className=" p-3 w-full">
                                                 <div className="flex gap-3">
                                                     {
-                                                        item?.profile_image == null ?
+                                                        item?.image_uri == null ?
                                                             <p className="size-7 text-center text-black font-tektur font-black bg-white border">{item?.user?.slice(0, 1)}</p> :
-                                                            <img src={item?.profile_image} alt="profile image" className="size-7 border" />
+                                                            <img src={item?.image_uri} alt="profile image" className="size-7 border" />
                                                     }
                                                     <p className="text-xs font-poppins">@{item?.username} • {formatTimestamp(item?.timestamp)}</p>
                                                 </div>

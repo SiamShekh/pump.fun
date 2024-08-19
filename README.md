@@ -1,13 +1,7 @@
 # pump.fun
 
 **5:30 PM - 7:30 PM: Work on Profile Section**
-- Implement the virtual wallet details (public key, private key, API key).
 - Display the user's trading history, tokens, and interests in the profile section.
-
-**8:00 PM - 9:00 PM: Work on Create New Coin Functionality**
-- Begin by converting the image to IPFS and request metadata.
-- Implement the functionality for sending funds from the user's wallet to the virtual wallet.
-- Ensure the virtual wallet creates the coin, and the balance reflects the change.
 
 **9:15 PM - 9:45 PM: Final Touches & Review**
 - Review the work you've done throughout the day.

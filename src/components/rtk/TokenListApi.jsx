@@ -48,8 +48,14 @@ export const TokenListApi = createApi({
                 params: { pub: arg }
             })
         }),
+        Profile: builder.query({
+            query: (arg) => ({
+                url: '/profile',
+                params: { mint: arg }
+            })
+        }),
     }),
 
 });
 
-export const { useCreateWalletsQuery, useFindWalletsQuery, useDetailsQuery, useTopQuery, useNewQuery, useTopGainerQuery, usePopulerQuery, useHomeInformissionQuery } = TokenListApi;
+export const { useProfileQuery, useCreateWalletsQuery, useFindWalletsQuery, useDetailsQuery, useTopQuery, useNewQuery, useTopGainerQuery, usePopulerQuery, useHomeInformissionQuery } = TokenListApi;

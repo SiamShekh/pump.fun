@@ -23,7 +23,7 @@ const MainRoutes = createBrowserRouter([
                 element: <Home />
             },
             {
-                path: "/profile",
+                path: "/profile/:mint",
                 element: <Profile />
             },
             {

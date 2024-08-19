@@ -1,5 +1,5 @@
 
-const ForYou = ({data}) => {
+const ForYou = ({ data }) => {
 
     const TimeStampToTime = (timestamp) => {
         const date = new Date(timestamp);
@@ -8,7 +8,7 @@ const ForYou = ({data}) => {
         let minutes = date.getMinutes();
         let ampm = hours >= 12 ? 'PM' : 'AM';
         hours = hours % 12;
-        hours = hours ? hours : 12; 
+        hours = hours ? hours : 12;
         minutes = minutes < 10 ? '0' + minutes : minutes;
 
         const day = date.getDate();
@@ -55,7 +55,7 @@ const ForYou = ({data}) => {
                                             </div>
                                         </td>
                                         <td>${Number(item?.usd_market_cap).toFixed(2)}</td>
-                                        <td>{item?.username ? "@" + item?.username : <a className="hover:underline" href={`https://solscan.io/account/${item?.creator}`}>{String(item?.creator).slice(0, 10) + "..."}</a>}</td>
+                                        <td>{<a className="hover:underline" href={`/profile/${item?.creator}`}>{String(item?.creator).slice(0, 10) + "..."}</a>}</td>
                                         <td>{TimeStampToTime(item?.created_timestamp)}</td>
                                         <td>{TimeStampToTime(item?.last_trade_timestamp)}</td>
                                         <th>
