@@ -4,7 +4,6 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import CreateToken from "./pages/CreateToken";
 import TokenDetails from "./pages/TokenDetails";
-import TrackWallets from "./pages/TrackWallets";
 import ErrorPage from "./components/ui/ErrorPage";
 
 
@@ -34,10 +33,7 @@ const MainRoutes = createBrowserRouter([
                 path: "/details/:id",
                 element: <TokenDetails />
             },
-            {
-                path: "/track",
-                element: <TrackWallets />
-            },
+            
         ]
     },
 ]);

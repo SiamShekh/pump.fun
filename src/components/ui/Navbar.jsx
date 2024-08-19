@@ -7,7 +7,6 @@ const Nav = <>
 
     <NavLink to={'/create'} className={({ isActive }) => `${isActive ? 'text-opacity-100 text-white' : 'text-white text-opacity-50 '}`}>New Token</NavLink>
 
-    <NavLink to={'/track'} className={({ isActive }) => `${isActive ? 'text-opacity-100 text-white' : 'text-white text-opacity-50 '}`}>Track Wallets</NavLink>
 </>;
 
 const Navbar = () => {

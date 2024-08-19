@@ -1,7 +1,5 @@
 # pump.fun
 
-**5:30 PM - 7:30 PM: Work on Profile Section**
-- Display the user's trading history, tokens, and interests in the profile section.
 
 **9:15 PM - 9:45 PM: Final Touches & Review**
 - Review the work you've done throughout the day.
