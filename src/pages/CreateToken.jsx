@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { Connection, Keypair, VersionedTransaction, SendTransactionError, Transaction, SystemProgram, PublicKey, sendAndConfirmTransaction } from '@solana/web3.js';
+import { Connection, Keypair, Transaction, SystemProgram, PublicKey, sendAndConfirmTransaction } from '@solana/web3.js';
 import { useFindWalletsQuery } from '../components/rtk/TokenListApi';
 import bs58 from 'bs58';
 import transfer from "../assets/image/transfer_img.png";
@@ -15,7 +15,7 @@ export default function CreateToken() {
         RPC_ENDPOINT,
         'confirmed',
     );
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, reset } = useForm();
     const { data: VirtualWallets } = useFindWalletsQuery(publicKey?.toBase58());
     const [isModal, setModal] = useState(false);
     const [isTransaction, setTransaction] = useState("");
@@ -32,21 +32,24 @@ export default function CreateToken() {
         }).then(res => res.json());
 
         const ipfsObj = {
-            name: "AMi lowya",
+            name: e?.name,
             file: ImageResponse?.data?.display_url,
-            symbol: "LOWYA",
-            description: "ghfbvhuvksb",
+            symbol: e?.symbol,
+            description: e?.description,
+            twitter: e?.twitter,
+            telegram: e?.telegram,
+            website: e?.website,
             showName: "true"
         }
 
         const meta_response = await axios.post('https://block-cors.vercel.app/ipfs', ipfsObj);
 
         const metadataResponseJSON = meta_response.data;
-        const mintKeypair = Keypair.generate().secretKey;
+        const mintKeypair = Keypair.generate();
 
         await SendSol();
-        await CreateToken(metadataResponseJSON, mintKeypair);
-        await SendBackExistingSol();
+        await CreateToken(metadataResponseJSON, mintKeypair.secretKey, mintKeypair?.publicKey);
+
     }
 
     const SendSol = async () => {
@@ -65,10 +68,9 @@ export default function CreateToken() {
 
         const signature = await sendTransaction(transaction, connection);
         await connection.confirmTransaction(signature, 'processed');
-        console.log('Transaction sent with signature:', signature);
     }
 
-    const CreateToken = async (metadataResponseJSON, mint) => {
+    const CreateToken = async (metadataResponseJSON, mint, pub) => {
         const response = await fetch(`https://pumpportal.fun/api/trade?api-key=${VirtualWallets?.virtualWallet?.apiKey}`, {
             method: "POST",
             headers: {
@@ -92,33 +94,16 @@ export default function CreateToken() {
         if (response.status === 200) {
             const data = await response.json();
 
-            await getTransactionDetails(data.signature);
+            await setMint(pub);
+            await setTransaction(data.signature);
+            await setModal(true);
 
-        } else {
-            console.log(response.statusText);
-        }
-    }
-
-    async function getTransactionDetails(txSignature) {
-        try {
-            const txDetails = await connection.getTransaction(txSignature, {
-                commitment: "confirmed",
-                maxSupportedTransactionVersion: 0
-            });
-
-            setTransaction(txSignature);
-            setMint(txDetails?.meta?.postTokenBalances[0]?.mint);
-            setModal(true);
-
-            return txDetails?.meta?.postTokenBalances[0]?.mint;
-        } catch (error) {
-            console.error("Failed to get transaction:", error);
         }
     }
 
     const SendBackExistingSol = async () => {
         const privateKeyString = VirtualWallets?.virtualWallet?.privateKey;
-        
+
         const privateKey = bs58.decode(privateKeyString);
         const keypair = Keypair.fromSecretKey(privateKey);
         const latestBlockhash = await connection.getLatestBlockhash('finalized');
@@ -136,15 +121,12 @@ export default function CreateToken() {
             transaction.recentBlockhash = latestBlockhash.blockhash;
             transaction.feePayer = keypair.publicKey;
             transaction.sign(keypair);
-            const signature = await sendAndConfirmTransaction(connection, transaction, [keypair]);
-            console.log('Transaction sent with signature:', signature);
-        } else {
-            console.log("Not enough SOL to cover transaction fees.");
+            await sendAndConfirmTransaction(connection, transaction, [keypair]);
         }
     }
 
     return (
-        <div className='h-screen flex justify-center items-center'>
+        <div className='min-h-screen mt-10 mx-auto w-full px-5'>
             {
                 isModal &&
                 <dialog id="my_modal_1" open className="modal">
@@ -152,26 +134,61 @@ export default function CreateToken() {
                         <img src={transfer} alt="transfer icon" className='w-40 mx-auto' />
 
                         <div className="flex gap-5 mt-5 justify-center items-center">
-                            <Link to={`https://solscan.io/tx/${isTransaction}`} className='border px-5 py-2 border-b-4 border-r-4 font-tektur text-xl'>Solscan</Link>
-                            <Link to={`/details/${isMint}`} className='border px-5 py-2 border-b-4 border-r-4 font-tektur text-xl' >Details</Link>
+                            <Link onClick={() => {
+                                SendBackExistingSol();
+                                reset();
+                            }} to={`https://solscan.io/tx/${isTransaction}`} target='_blank' className='border px-5 py-2 border-b-4 border-r-4 font-tektur text-xl'>Solscan</Link>
+                            <Link onClick={() => {
+                                SendBackExistingSol();
+                                reset();
+                            }} to={`/details/${isMint}`} target='_blank' className='border px-5 py-2 border-b-4 border-r-4 font-tektur text-xl' >Details</Link>
                         </div>
 
                         <div className="modal-action">
                             <form method="dialog">
-                                <button className="btn" onClick={() => setModal(false)}>Close</button>
+                                <button className="btn" onClick={() => {
+                                    SendBackExistingSol();
+                                    setModal(false);
+                                    reset();
+                                }}>Close</button>
                             </form>
                         </div>
                     </div>
                 </dialog>
             }
 
-            <h1 onClick={SendBackExistingSol}>Create Your Token</h1>
-            <form onSubmit={handleSubmit(handleForm)}>
-                <div>
-                    <label>Token Image: </label>
-                    <input className='bg-black text-white' type="file" {...register("file")} required />
+            <h1 className='font-tektur text-2xl text-center'>Create Your Token</h1>
+            <form onSubmit={handleSubmit(handleForm)} className='mt-5 '>
+                <div className="grid md:grid-cols-2 gap-5 justify-center items-center">
+                    <div className="">
+                        <input placeholder='coin name' {...register('name', { required: true })} className='text-white px-5 py-3 bg-black outline-none border w-64 md:w-full font-poppins' />
+                    </div>
+                    <div className="">
+                        <input placeholder='coin symbol' {...register('symbol', { required: true })} className='text-white px-5 py-3 bg-black outline-none border w-64 md:w-full font-poppins' />
+                    </div>
+
+                    <div className="col-span-2">
+                        <textarea placeholder='coin description' {...register('description', { required: true })} className='text-white px-5 py-3 bg-black outline-none border w-64 md:w-full font-poppins ' />
+                    </div>
+
+                    <div className="">
+                        <input placeholder='coin name' type='file' {...register('file', { required: true })} className='text-white px-5 py-3 bg-black outline-none border w-64 md:w-full font-poppins' />
+                    </div>
+
+                    <div className="">
+                        <input placeholder='coin website' {...register('website')} className='text-white px-5 py-3 bg-black outline-none border w-64 md:w-full font-poppins' />
+                    </div>
+
+                    <div className="">
+                        <input placeholder='coin x(twitter)' {...register('twitter', { required: true })} className='text-white px-5 py-3 bg-black outline-none border w-64 md:w-full font-poppins' />
+                    </div>
+                    <div className="">
+                        <input placeholder='coin telegram' {...register('telegram', { required: true })} className='text-white px-5 py-3 bg-black outline-none border w-64 md:w-full font-poppins' />
+                    </div>
                 </div>
-                <button type="submit">Create Token</button>
+                <p>Tip: coin data cannot be changed after creation</p>
+
+                <button className='bg-white text-black px-8 py-2 mt-5 font-poppins font-semibold' type="submit">Create Token</button>
             </form>
         </div>
     );
