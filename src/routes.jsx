@@ -5,11 +5,13 @@ import Profile from "./pages/Profile";
 import CreateToken from "./pages/CreateToken";
 import TokenDetails from "./pages/TokenDetails";
 import TrackWallets from "./pages/TrackWallets";
+import ErrorPage from "./components/ui/ErrorPage";
 
 
 const MainRoutes = createBrowserRouter([
     {
         path: '/',
+        errorElement: <ErrorPage />,
         element: <MainLayouts />,
         children: [
             {

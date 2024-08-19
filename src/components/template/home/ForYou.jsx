@@ -28,7 +28,6 @@ const ForYou = ({data}) => {
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Price</th>
                                 <th>Marketcap</th>
                                 <th>Creator</th>
                                 <th>Created time</th>
@@ -55,7 +54,6 @@ const ForYou = ({data}) => {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>$0.257</td>
                                         <td>${Number(item?.usd_market_cap).toFixed(2)}</td>
                                         <td>{item?.username ? "@" + item?.username : <a className="hover:underline" href={`https://solscan.io/account/${item?.creator}`}>{String(item?.creator).slice(0, 10) + "..."}</a>}</td>
                                         <td>{TimeStampToTime(item?.created_timestamp)}</td>

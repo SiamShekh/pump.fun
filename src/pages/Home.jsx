@@ -5,9 +5,15 @@ import NewToken from "../components/template/home/NewToken";
 import Populer from "../components/template/home/Populer";
 import TopGainer from "../components/template/home/TopGainer";
 import { useHomeInformissionQuery } from "../components/rtk/TokenListApi";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
-    const [searchTrem, setSearchTrem] = useState("");
     const { data, isFetching } = useHomeInformissionQuery(undefined);
+    const {handleSubmit, register} = useForm();
+    const navigate = useNavigate();
+    const HandleSearch = e => {
+        navigate(`/details/${e.search}`)
+    }
 
     return (
         <div>
@@ -22,15 +28,15 @@ const Home = () => {
                 <div className="relative z-10 h-full w-full flex justify-center items-center ">
                     <div className="">
                         <p className="px-5 font-tektur md:text-5xl text-2xl  md:px-0 font-bold mb-5">Search by Contract </p>
-                        <div className="border border-b-4 border-r-4 px-7 py-3 w-full flex justify-between" >
-                            <input type="text" placeholder="search" className="bg-transparent lg:w-fit w-[60vw] font-tektur outline-none " />
+                        <form onSubmit={handleSubmit(HandleSearch)} className="border border-b-4 border-r-4 px-7 py-3 w-full flex justify-between" >
+                            <input type="text" {...register('search')} placeholder="search" className="bg-transparent lg:w-fit w-[60vw] font-tektur outline-none " />
 
-                            <div className="md:btn md:rounded-full">
+                            <button type="submit" className="md:btn md:rounded-full">
                                 <svg xmlns="https://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                 </svg>
-                            </div>
-                        </div>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </section>
