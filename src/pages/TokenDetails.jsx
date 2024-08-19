@@ -1,7 +1,11 @@
 import { useParams } from "react-router-dom";
 import TradingChart from "../components/template/details/TradingChart";
 import { useDetailsQuery } from "../components/rtk/TokenListApi";
-import { useState } from "react";
+
+import { useEffect, useState } from 'react';
+import { useForm } from "react-hook-form";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { Connection, LAMPORTS_PER_SOL, PublicKey, VersionedTransaction } from "@solana/web3.js";
 
 function formatTimestamp(timestamp) {
     const date = new Date(timestamp);
@@ -12,12 +16,57 @@ function formatTimestamp(timestamp) {
 }
 
 const TokenDetails = () => {
+
     const contractParams = useParams().id;
     const [isSol, setSol] = useState(false);
     const [isSlippage, setSlippage] = useState(false);
     const [isBuy, setBuy] = useState(true);
 
     const { data, isFetching } = useDetailsQuery(contractParams);
+    const { handleSubmit, register, reset } = useForm();
+
+    const { publicKey, sendTransaction } = useWallet();
+    const RPC_ENDPOINT = "https://rpc.ankr.com/solana";
+    const web3Connection = new Connection(RPC_ENDPOINT, 'confirmed');
+
+    async function sendPortalTransaction(e) {
+        const response = await fetch(`https://pumpportal.fun/api/trade-local`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                // "publicKey": publicKey?.toBase58(),  // Use the connected wallet's public key
+                // "action": "buy",
+                // "mint": "HwkxFEj8oVXnZRrDhJK6PTTopTv3auCCNaSN697ypump",
+                // "denominatedInSol": "false",
+                // "amount": 100,
+                // "slippage": 10,
+                // "priorityFee": 0.00001,
+                // "pool": "pump"
+                "publicKey": publicKey?.toBase58(),  // Use the connected wallet's public key
+                "action": isBuy ? "buy" : "sell",
+                "mint": contractParams,
+                "denominatedInSol": isSol ? "true" : "false",
+                "amount": Number(e?.amount),
+                "slippage": Number(e?.slippage) || 2,
+                "priorityFee": Number(e?.priority) || 0.00001,
+                "pool": data?.SignleData?.complete== "false" ? "pump" : "raydium"
+            })
+        });
+        console.log(e);
+
+
+
+        if (response.status === 200) {
+            const data = await response.arrayBuffer();
+            const tx = VersionedTransaction.deserialize(new Uint8Array(data));
+            const signature = await sendTransaction(tx, web3Connection);
+            console.log("Transaction: https://solscan.io/tx/" + signature);
+        } else {
+            console.log(response.statusText); // log error
+        }
+    }
 
     return (
         <div className="mt-10 px-5">
@@ -42,7 +91,7 @@ const TokenDetails = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                data?.Trade &&
+                                                data?.Trade.length &&
                                                 data?.Trade?.slice(0, 8).map((item, index) =>
                                                     <tr key={index}>
                                                         <td><a className="hover:underline" target="_blank" href={`https://solscan.io/account/${item?.user}`}>{item?.user?.slice(0, 5) + "..."}</a></td>
@@ -57,14 +106,14 @@ const TokenDetails = () => {
                             </div>
                             <div className="md:col-span-2 p-[1px] bg-white hidden md:block relative h-fit">
                                 <div className="flex gap-3 text-black font-poppins p-3">
-                                    <p className="capitalize">{data?.SignleData.name}</p>
-                                    <p className="capitalize">Symbol: {data?.SignleData.symbol}</p>
-                                    <p className="capitalize">Marketcup: {Number(data?.SignleData.market_cap).toFixed(2)} SOL</p>
+                                    <p className="capitalize">{data?.SignleData?.name}</p>
+                                    <p className="capitalize">Symbol: {data?.SignleData?.symbol}</p>
+                                    <p className="capitalize">Marketcup: {Number(data?.SignleData?.market_cap).toFixed(2)} SOL</p>
                                 </div>
                                 <TradingChart data={data?.chart} isFetching={isFetching} />
                             </div>
                             <div className="md:col-span-3 lg:col-span-1 mx-auto w-full border h-full p-5 bg-black">
-                                <div className="rounded-2xl">
+                                <form onSubmit={handleSubmit(sendPortalTransaction)} className="rounded-2xl">
                                     <div className="flex items-center gap-4">
                                         <button onClick={() => setBuy(true)} className={`flex-1 border border-b-4 border-r-4 py-2 font-tektur text-xl border-green-500 uppercase hover:border-black ${isBuy && 'bg-green-500'}`}>Buy</button>
                                         <button onClick={() => setBuy(false)} className={`flex-1 border border-b-4 border-r-4 py-2 font-tektur text-xl border-red-500 uppercase hover:border-black ${!isBuy && 'bg-red-500'}`}>sell</button>
@@ -82,15 +131,15 @@ const TokenDetails = () => {
                                     {
                                         isSlippage && <div className="flex justify-between gap-3">
                                             <div className="flex-1 border p-2 mt-5">
-                                                <input type="number" placeholder="max slippage" defaultValue={'2'} className="outline-none bg-transparent w-20" />
+                                                <input type="number" {...register('slippage')} placeholder="max slippage" defaultValue={'2'} className="outline-none bg-transparent w-20" />
                                             </div>
                                             <div className="flex-1 border p-2 mt-5">
-                                                <input type="number" placeholder="Priority fee" defaultValue={'0.003'} className="outline-none bg-transparent w-20" />
+                                                <input type="number" {...register('priority')} placeholder="Priority fee" defaultValue={'0.003'} className="outline-none bg-transparent w-20" />
                                             </div>
                                         </div>
                                     }
                                     <div className="w-full flex justify-between items-center border p-2 mt-5">
-                                        <input type="number" placeholder="0.0" className="outline-none bg-transparent w-20" />
+                                        <input type="number" {...register('amount')} placeholder="0.0" className="outline-none bg-transparent w-20" />
 
                                         <div className="flex gap-1 items-center">
                                             {
@@ -105,8 +154,8 @@ const TokenDetails = () => {
                                         </div>
                                     </div>
 
-                                    <button className={`flex-1 border border-b-4 border-r-4 py-2 font-tektur text-xl ${isBuy ? 'border-green-500 hover:bg-green-500' : 'border-red-500 hover:bg-red-500'} uppercase hover:border-black w-full mt-5`}>place trade</button>
-                                </div>
+                                    <button type="submit" className={`flex-1 border border-b-4 border-r-4 py-2 font-tektur text-xl ${isBuy ? 'border-green-500 hover:bg-green-500' : 'border-red-500 hover:bg-red-500'} uppercase hover:border-black w-full mt-5`}>place trade</button>
+                                </form>
 
                                 <div className="flex gap-3 items-center mt-5">
                                     {
@@ -168,7 +217,7 @@ const TokenDetails = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                data?.Holder &&
+                                                data?.Holder?.length &&
                                                 data?.Holder?.slice(0, 8).map((item, index) =>
                                                     <tr key={index}>
                                                         <td><a className="hover:underline" target="_blank" href={`https://solscan.io/account/${item?.address}`}>{item?.address?.slice(0, 5) + "..."}</a></td>

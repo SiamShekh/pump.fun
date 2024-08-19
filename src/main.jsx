@@ -10,27 +10,15 @@ import '@solana/wallet-adapter-react-ui/styles.css';
 import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ReduxStore } from './ReduxStore.jsx';
-import {  PhantomWalletAdapter, SolflareWalletAdapter, TrezorWalletAdapter, TrustWalletAdapter, WalletConnectWalletAdapter } from '@solana/wallet-adapter-wallets';
-
-const wallets = [
-  new PhantomWalletAdapter(),
-  new SolflareWalletAdapter(),
-  new TrustWalletAdapter(),
-  new WalletConnectWalletAdapter(),
-  new TrezorWalletAdapter(),
-];
+import AppWalletProvider from './components/scripts/AppWalletProvider.jsx';
 
 const AppWrapper = () => {
   return (
-    <ConnectionProvider endpoint={clusterApiUrl('mainnet-beta')}>
-      <WalletProvider wallets={wallets} autoConnect>
-        <WalletModalProvider>
-          <Provider store={ReduxStore}>
-            <RouterProvider router={MainRoutes} />
-          </Provider>
-        </WalletModalProvider>
-      </WalletProvider>
-    </ConnectionProvider>
+    <AppWalletProvider>
+      <Provider store={ReduxStore}>
+        <RouterProvider router={MainRoutes} />
+      </Provider>
+    </AppWalletProvider>
   );
 };
 
