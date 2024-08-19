@@ -2,10 +2,9 @@ import React from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { Connection, PublicKey, SystemProgram, Transaction } from '@solana/web3.js';
 
-const Profile = () => {
+const SendSol = () => {
     const { publicKey, sendTransaction } = useWallet();
-    const RPC_ENDPOINT = "https://rpc.helius.xyz/?api-key=40c3ebe4-c797-45a3-895e-b3cc09a24bf3";
-
+    const RPC_ENDPOINT = "https://api.mainnet-beta.solana.com"; // Solana's public mainnet endpoint
     const connection = new Connection(RPC_ENDPOINT, 'confirmed');
 
     const sendSol = async () => {
@@ -18,6 +17,9 @@ const Profile = () => {
         const amount = 0.001;
 
         try {
+            const latestBlockhash = await connection.getLatestBlockhash('finalized');
+            console.log('Fetched Blockhash:', latestBlockhash);
+
             const transaction = new Transaction().add(
                 SystemProgram.transfer({
                     fromPubkey: publicKey,
@@ -26,11 +28,9 @@ const Profile = () => {
                 })
             );
 
-            const latestBlockhash = await connection.getLatestBlockhash('finalized');
             transaction.recentBlockhash = latestBlockhash.blockhash;
             transaction.feePayer = publicKey;
 
-            // Sign the transaction with the connected wallet
             const signature = await sendTransaction(transaction, connection);
             await connection.confirmTransaction(signature, 'processed');
 
@@ -49,4 +49,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default SendSol;

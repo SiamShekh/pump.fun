@@ -36,15 +36,7 @@ const TokenDetails = () => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                // "publicKey": publicKey?.toBase58(),  // Use the connected wallet's public key
-                // "action": "buy",
-                // "mint": "HwkxFEj8oVXnZRrDhJK6PTTopTv3auCCNaSN697ypump",
-                // "denominatedInSol": "false",
-                // "amount": 100,
-                // "slippage": 10,
-                // "priorityFee": 0.00001,
-                // "pool": "pump"
-                "publicKey": publicKey?.toBase58(),  // Use the connected wallet's public key
+                "publicKey": publicKey?.toBase58(),  
                 "action": isBuy ? "buy" : "sell",
                 "mint": contractParams,
                 "denominatedInSol": isSol ? "true" : "false",

@@ -33,12 +33,23 @@ export const TokenListApi = createApi({
         Details: builder.query({
             query: (arg) => ({
                 url: '/details',
-                params: {mint: arg} 
+                params: { mint: arg }
             })
         }),
-        
+        CreateWallets: builder.query({
+            query: (arg) => ({
+                url: '/create-wallet',
+                params: { pub: arg }
+            })
+        }),
+        FindWallets: builder.query({
+            query: (arg) => ({
+                url: '/find-wallet',
+                params: { pub: arg }
+            })
+        }),
     }),
 
 });
 
-export const { useDetailsQuery,useTopQuery, useNewQuery, useTopGainerQuery, usePopulerQuery, useHomeInformissionQuery } = TokenListApi;
+export const { useCreateWalletsQuery, useFindWalletsQuery, useDetailsQuery, useTopQuery, useNewQuery, useTopGainerQuery, usePopulerQuery, useHomeInformissionQuery } = TokenListApi;

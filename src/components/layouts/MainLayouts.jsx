@@ -1,7 +1,11 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../ui/Navbar";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useCreateWalletsQuery } from "../rtk/TokenListApi";
 
 const MainLayouts = () => {
+    const { publicKey } = useWallet();
+    useCreateWalletsQuery(publicKey?.toBase58());
     return (
         <div data-theme="synthwave" className="mx-auto">
             <nav className="max-h-[15vh] fixed top-0 w-full z-50">
