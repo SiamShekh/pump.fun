@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import hero_image from "../assets/image/dog-look-at-me.webp";
 import ForYou from "../components/template/home/ForYou";
 import NewToken from "../components/template/home/NewToken";
@@ -7,14 +7,18 @@ import TopGainer from "../components/template/home/TopGainer";
 import { useHomeInformissionQuery } from "../components/rtk/TokenListApi";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+
 const Home = () => {
     const { data, isFetching } = useHomeInformissionQuery(undefined);
-    const {handleSubmit, register} = useForm();
+    const { handleSubmit, register } = useForm();
     const navigate = useNavigate();
     const HandleSearch = e => {
         navigate(`/details/${e.search}`)
     }
 
+    
+
+    
     return (
         <div>
             <section className="relative h-[50vh]">
