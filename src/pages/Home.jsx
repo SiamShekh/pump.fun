@@ -23,7 +23,7 @@ const Home = () => {
 
     return (
         <div>
-            <section className="relative min:h-[50vh] my-10">
+            <section className="relative lg:h-[70vh] h-[50vh] my-10">
                 <div className="absolute z-0 w-full">
                     <img src={hero_image} alt="" className="w-full object-cover h-[50vh] relative z-0" />
                     <div className="bg-gradient-to-b from-transparent to-[#1A103D] w-full h-full absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]"></div>
