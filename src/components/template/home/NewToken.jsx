@@ -3,7 +3,7 @@ import ImageWithFallback from "./ImageFallbackHome";
 
 const NewToken = ({ data }) => {
     const [realTime, setRealTime] = useState([]);
-    const [animate, setAnimate] = useState(false); // State to control animation
+    const [animate, setAnimate] = useState(false); 
 
     useEffect(() => {
         const ws = new WebSocket('wss://pumpportal.fun/api/data');

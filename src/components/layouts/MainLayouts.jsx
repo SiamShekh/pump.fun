@@ -8,7 +8,7 @@ import { useEffect } from "react";
 const MainLayouts = () => {
     const { publicKey } = useWallet();
     useCreateWalletsQuery(publicKey?.toBase58());
-    // let ToastId;
+    let ToastId;
     // useEffect(() => {
     //     const ws = new WebSocket('wss://frontend-api.pump.fun/socket.io/?EIO=4&transport=websocket');
 
@@ -24,26 +24,8 @@ const MainLayouts = () => {
     //             const parsedArray = JSON.parse(data);
     //             const eventName = parsedArray[0];
     //             const parsedData = parsedArray[1];
-    //             if (eventName === 'tradeCreated') {
-    //                 toast.success(
-    //                     (t) => (
-    //                         <span className="font-tektur text-xl text-black">
-    //                             <strong className="uppercase">${parsedData?.symbol}</strong> is just traded.
-    //                             <a
-    //                                 className="text-green-500 underline"
-    //                                 href={`/details/${parsedData?.mint}`}
-    //                                 onClick={() => toast.dismiss(t.id)}
-    //                             >
-    //                                 {' View Coin'}
-    //                             </a>
-    //                         </span>
-    //                     ),
-    //                     {
-    //                         duration: 1000,
-    //                         id: ToastId,
-    //                     }
-    //                 );
-    //             }
+                
+                
 
     //         } catch (error) {
     //             console.error("Failed to parse WebSocket message:", event.data);

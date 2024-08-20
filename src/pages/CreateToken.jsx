@@ -1,3 +1,6 @@
+import { Buffer } from 'buffer';
+window.Buffer = Buffer;
+
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { useWallet } from '@solana/wallet-adapter-react';
@@ -11,13 +14,16 @@ import toast from 'react-hot-toast';
 
 export default function CreateToken() {
     const { publicKey, sendTransaction } = useWallet();
-    const RPC_ENDPOINT = "https://rpc.helius.xyz/?api-key=40c3ebe4-c797-45a3-895e-b3cc09a24bf3";
+    const RPC_ENDPOINT = "https://mainnet.helius-rpc.com/?api-key=40c3ebe4-c797-45a3-895e-b3cc09a24bf3";
+    // const RPC_ENDPOINT = "https://www.ankr.com/rpc/solana";
     const connection = new Connection(
         RPC_ENDPOINT,
         'confirmed',
     );
+
     const { register, handleSubmit, reset } = useForm();
     const { data: VirtualWallets } = useFindWalletsQuery(publicKey?.toBase58());
+    
     const [isModal, setModal] = useState(false);
     const [isTransaction, setTransaction] = useState("");
     const [isMint, setMint] = useState("");
@@ -30,7 +36,7 @@ export default function CreateToken() {
             form.append("image", e.file[0]);
 
             //UPLOAD IMAGE TO IMGBB
-            ToastId = toast('Iconing Uploading');
+            ToastId = toast.loading('Iconing Uploading');
             const ImageResponse = await fetch("https://api.imgbb.com/1/upload?key=8c774531db468728c2d324fd5ba6991d", {
                 body: form,
                 method: "POST",
@@ -41,9 +47,9 @@ export default function CreateToken() {
                 file: ImageResponse?.data?.display_url,
                 symbol: e?.symbol,
                 description: e?.description,
-                twitter: e?.twitter,
-                telegram: e?.telegram,
-                website: e?.website,
+                twitter: e?.twitter ? e?.twitter : "",
+                telegram: e?.telegram ? e?.telegram : "",
+                website: e?.website ? e?.website : "",
                 showName: "true"
             }
             toast.loading('Meta Uri Genarating...', { id: ToastId });
@@ -51,12 +57,15 @@ export default function CreateToken() {
 
             const metadataResponseJSON = meta_response.data;
             const mintKeypair = Keypair.generate();
+            toast.loading('Keypair genarating...', { id: ToastId });
 
             await SendSol();
-            await CreateToken(metadataResponseJSON, mintKeypair.secretKey, mintKeypair?.publicKey);
+            await CreateToken(metadataResponseJSON, mintKeypair?.secretKey, mintKeypair?.publicKey);
 
         } catch (error) {
-            toast.error('some thing went wrong...', { id: ToastId });
+            console.log(error);
+            
+            toast.error(error?.message, { id: ToastId });
         }
     }
 
@@ -78,6 +87,7 @@ export default function CreateToken() {
         toast.loading('Request For Transaction...', { id: ToastId });
         const signature = await sendTransaction(transaction, connection);
         await connection.confirmTransaction(signature, 'processed');
+        toast.loading('confirming Transaction...', { id: ToastId });
     }
 
     const CreateToken = async (metadataResponseJSON, mint, pub) => {
@@ -108,7 +118,6 @@ export default function CreateToken() {
             await setMint(pub);
             await setTransaction(data.signature);
             await setModal(true);
-
         }
     }
 

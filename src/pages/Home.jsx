@@ -7,6 +7,8 @@ import TopGainer from "../components/template/home/TopGainer";
 import { useHomeInformissionQuery } from "../components/rtk/TokenListApi";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import LastTradeCoin from "../components/template/home/LastTradeCoin";
+import LastReplyCoin from "../components/template/home/LastReplyCoin";
 
 const Home = () => {
     const { data, isFetching } = useHomeInformissionQuery(undefined);
@@ -16,12 +18,12 @@ const Home = () => {
         navigate(`/details/${e.search}`)
     }
 
-    
 
-    
+
+
     return (
         <div>
-            <section className="relative h-[50vh]">
+            <section className="relative min:h-[50vh] my-10">
                 <div className="absolute z-0 w-full">
                     <img src={hero_image} alt="" className="w-full object-cover h-[50vh] relative z-0" />
                     <div className="bg-gradient-to-b from-transparent to-[#1A103D] w-full h-full absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]"></div>
@@ -29,8 +31,11 @@ const Home = () => {
                     <div className="bg-gradient-to-l from-transparent to-[#1A103D] w-full h-full absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]"></div>
                     <div className="bg-gradient-to-t from-transparent to-[#1A103D] w-full h-full absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]"></div>
                 </div>
-                <div className="relative z-10 h-full w-full flex justify-center items-center ">
+                <div className="relative z-10 h-full w-full flex lg:grid gap-5 grid-cols-4 justify-center items-center ">
                     <div className="">
+                        <LastTradeCoin />
+                    </div>
+                    <div className="col-span-2">
                         <p className="px-5 font-tektur md:text-5xl text-2xl  md:px-0 font-bold mb-5">Search by Contract </p>
                         <form onSubmit={handleSubmit(HandleSearch)} className="border rounded-2xl px-7 py-3 w-full flex justify-between" >
                             <input type="text" {...register('search')} placeholder="search" className="bg-transparent lg:w-fit w-[60vw] font-tektur outline-none " />
@@ -42,6 +47,10 @@ const Home = () => {
                             </button>
                         </form>
                     </div>
+                    <div className="">
+                        <LastReplyCoin/>
+                    </div>
+
                 </div>
             </section>
 
