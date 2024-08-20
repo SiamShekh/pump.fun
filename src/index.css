@@ -42,3 +42,44 @@
         transform: rotate(1turn);
     }
 }
+
+/* Shake animation */
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20%,
+    60% {
+        transform: translateX(-10px);
+    }
+
+    40%,
+    80% {
+        transform: translateX(10px);
+    }
+}
+
+/* Background color change animation */
+@keyframes changeBackground {
+    0% {
+        background-color: yellow;
+    }
+
+    50% {
+        background-color: green;
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
+/* Apply the animations to the element */
+.shake-and-change-bg {
+    animation: shake 0.5s ease-in-out, changeBackground 3s linear;
+    animation-iteration-count: 6, 1;
+    /* Shake 6 times (0.5s each), and change background color once over 3s */
+}

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
-import icons from "../../assets/icons/icons.webp";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import icons from "../../assets/icons/onlypumps_logo.webp";
 
 const Nav = <>
     <NavLink to={'/'} className={({ isActive }) => `${isActive ? 'text-opacity-100 text-white' : 'text-white text-opacity-50 '}`}>Board</NavLink>
@@ -34,7 +34,7 @@ const Navbar = () => {
                     </ul>
                 </div>
 
-                <img src={icons} alt="logos" className="size-10 md:block hidden" />
+                <img src={icons} alt="logos" className="w-20 md:block hidden" />
                 <div className="md:flex items-center gap-5 hidden">
                     {Nav}
                 </div>
