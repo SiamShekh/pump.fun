@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useProfileQuery } from "../components/rtk/TokenListApi";
 import pump from "../assets/image/pump.png";
+import ImageProfileFallback from "../components/template/profile/ImageProfileFallback";
 
 const Profile = () => {
     const mint = useParams().mint;
@@ -16,7 +17,7 @@ const Profile = () => {
             <div className="flex items-center gap-10 flex-col md:flex-row">
                 <img src={pump} alt="profile logo" className="size-40" />
                 <div className="">
-                    <p className="text-2xl mb-10">Address: {mint.slice(0,12)+"..."}</p>
+                    <p className="text-2xl mb-10">Address: {mint.slice(0, 12) + "..."}</p>
                     <Link to={`https://solscan.io/account/${mint}`} className="border border-b-4 border-r-4 px-8 py-3">View on Explorer</Link>
                 </div>
             </div>
@@ -33,13 +34,11 @@ const Profile = () => {
                                 <p className="font-tektur text-xl md:text-3xl">Holding Balance</p>
                                 {
                                     uniqueBalance?.map((item, index) =>
-                                        <div key={index} className="border border-r-4 border-b-4 p-5 flex gap-5 items-center justify-between flex-col md:flex-row">
+                                        <div key={index} className="border border-white border-opacity-30 rounded-2xl mb-2 p-5 flex gap-5 items-center justify-between flex-col md:flex-row">
                                             <div className="flex gap-5 items-center">
-                                                <div className="avatar">
-                                                    <div className="mask mask-squircle w-12 md:w-16">
-                                                        <img src={item?.image_uri} />
-                                                    </div>
-                                                </div>
+                                                
+                                                <ImageProfileFallback item={item} />
+
                                                 <div className="">
                                                     <p className="font-poppins md:text-2xl">{item?.name}</p>
                                                     <p className="font-poppins md:text-2xl">{item?.balance}</p>
@@ -54,13 +53,10 @@ const Profile = () => {
                                 <p className="font-tektur  text-xl md:text-3xl">Created Coin</p>
                                 {
                                     data?.created?.map((item, index) =>
-                                        <div key={index} className="border border-r-4 border-b-4 p-5 flex gap-5 items-center justify-between flex-col md:flex-row">
+                                        <div key={index} className="border border-white border-opacity-30 rounded-2xl mb-2 p-5 flex gap-5 items-center justify-between flex-col md:flex-row">
                                             <div className="flex gap-5 items-center">
-                                                <div className="avatar">
-                                                    <div className="mask mask-squircle w-12 md:w-16">
-                                                        <img src={item?.image_uri} />
-                                                    </div>
-                                                </div>
+                                                <ImageProfileFallback item={item} />
+
                                                 <div className="">
                                                     <p className="font-poppins md:text-2xl">{item?.name}</p>
                                                     <p className="font-poppins">Marketcup: ${Number(item?.usd_market_cap).toFixed(2)}</p>

@@ -32,7 +32,7 @@ const Home = () => {
                 <div className="relative z-10 h-full w-full flex justify-center items-center ">
                     <div className="">
                         <p className="px-5 font-tektur md:text-5xl text-2xl  md:px-0 font-bold mb-5">Search by Contract </p>
-                        <form onSubmit={handleSubmit(HandleSearch)} className="border border-b-4 border-r-4 px-7 py-3 w-full flex justify-between" >
+                        <form onSubmit={handleSubmit(HandleSearch)} className="border rounded-2xl px-7 py-3 w-full flex justify-between" >
                             <input type="text" {...register('search')} placeholder="search" className="bg-transparent lg:w-fit w-[60vw] font-tektur outline-none " />
 
                             <button type="submit" className="md:btn md:rounded-full">

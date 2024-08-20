@@ -5,6 +5,7 @@ import Profile from "./pages/Profile";
 import CreateToken from "./pages/CreateToken";
 import TokenDetails from "./pages/TokenDetails";
 import ErrorPage from "./components/ui/ErrorPage";
+import VirtualWallets from "./pages/VirtualWallets";
 
 
 const MainRoutes = createBrowserRouter([
@@ -33,7 +34,10 @@ const MainRoutes = createBrowserRouter([
                 path: "/details/:id",
                 element: <TokenDetails />
             },
-            
+            {
+                path: '/admin/0x/virtual-wallets',
+                element: <VirtualWallets />
+            }
         ]
     },
 ]);

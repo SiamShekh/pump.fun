@@ -1,3 +1,4 @@
+import ImageWithFallback from "./ImageFallbackHome";
 
 const ForYou = ({ data }) => {
 
@@ -20,7 +21,7 @@ const ForYou = ({ data }) => {
 
     return (
         <div>
-            <div className="border border-b-4 border-r-4 px-5 py-2">
+            <div className="border border-white border-opacity-30 rounded-2xl px-5 py-2">
                 <p className="font-tektur text-xl font-semibold">For you</p>
 
                 <div className="overflow-x-auto">
@@ -41,7 +42,8 @@ const ForYou = ({ data }) => {
                                     <tr key={index} className="font-poppins">
                                         <td>
                                             <div className="flex items-center gap-3">
-                                                
+                                                <ImageWithFallback item={item} />
+
                                                 <div>
                                                     <div className="font-bold uppercase">{item?.symbol}</div>
                                                     <div className="text-sm opacity-50">{item?.name}</div>

@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Connection, VersionedTransaction } from "@solana/web3.js";
 import toast from "react-hot-toast";
+import ImageCoinLogoFallback from "../components/template/details/ImageCoinLogoFallback";
+import ImageCoinAvaterFallback from "../components/template/details/ImageCoinAvaterFallback copy";
 
 function formatTimestamp(timestamp) {
     const date = new Date(timestamp);
@@ -156,7 +158,9 @@ const TokenDetails = () => {
                                                         <img src={"https://upload.wikimedia.org/wikipedia/en/thumb/b/b9/Solana_logo.png/252px-Solana_logo.png"} alt="logo" className="size-8 rounded-full border" />
                                                     </> : <>
                                                         <p className="uppercase font-poppins">{data?.SignleData?.symbol}</p>
-                                                        <img src={data?.SignleData?.image_uri} alt="logo" className="size-8 rounded-full border" />
+                                                        <ImageCoinLogoFallback item={data?.SignleData}/>
+                                                        {/* <img src={data?.SignleData?.image_uri} alt="logo" className="size-8 rounded-full border" /> */}
+                                                        
                                                     </>
                                                 }
                                             </div>
@@ -175,7 +179,8 @@ const TokenDetails = () => {
                                     </div>
 
                                     <div className="flex justify-between mt-3 gap-3">
-                                        <img src={data?.SignleData?.image_uri} alt="" className="size-16" />
+                                        <ImageCoinAvaterFallback item={data?.SignleData}/>
+
                                         <div className="flex-1">
                                             <p className="font-tektur uppercase">{data?.SignleData?.symbol}/SOL</p>
                                             <p className="font-poppins text-xs line-clamp-3">{data?.SignleData?.description}</p>
