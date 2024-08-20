@@ -41,13 +41,7 @@ const ForYou = ({ data }) => {
                                     <tr key={index} className="font-poppins">
                                         <td>
                                             <div className="flex items-center gap-3">
-                                                <div className="avatar">
-                                                    <div className="mask mask-squircle h-12 w-12">
-                                                        <img
-                                                            src={`${item?.image_uri}?url=%2Fcoins%2Fmax.png&w=32&q=75`}
-                                                            alt="Avatar Tailwind CSS Component" />
-                                                    </div>
-                                                </div>
+                                                
                                                 <div>
                                                     <div className="font-bold uppercase">{item?.symbol}</div>
                                                     <div className="text-sm opacity-50">{item?.name}</div>

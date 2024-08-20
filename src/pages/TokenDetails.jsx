@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Connection, VersionedTransaction } from "@solana/web3.js";
+import toast from "react-hot-toast";
 
 function formatTimestamp(timestamp) {
     const date = new Date(timestamp);
@@ -29,33 +30,40 @@ const TokenDetails = () => {
     const RPC_ENDPOINT = "https://rpc.ankr.com/solana";
     const web3Connection = new Connection(RPC_ENDPOINT, 'confirmed');
 
+    let ToastId;
     async function sendPortalTransaction(e) {
+        ToastId = toast('getting token details');
         const response = await fetch(`https://pumpportal.fun/api/trade-local`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                "publicKey": publicKey?.toBase58(),  
+                "publicKey": publicKey?.toBase58(),
                 "action": isBuy ? "buy" : "sell",
                 "mint": contractParams,
                 "denominatedInSol": isSol ? "true" : "false",
                 "amount": Number(e?.amount),
                 "slippage": Number(e?.slippage) || 2,
                 "priorityFee": Number(e?.priority) || 0.00001,
-                "pool": data?.SignleData?.complete == "false" ? "pump" : "raydium"
+                "pool": data?.SignleData?.raydium_pool == null ? "pump" : "raydium"
             })
         });
 
         if (response.status === 200) {
             const data = await response.arrayBuffer();
             const tx = VersionedTransaction.deserialize(new Uint8Array(data));
+            toast.loading('request for transaction...', {id: ToastId});
             const signature = await sendTransaction(tx, web3Connection);
+            toast('token swapped...', {id: ToastId});
+            reset();
             console.log("Transaction: https://solscan.io/tx/" + signature);
         } else {
             console.log(response.statusText);
+            toast('something went wrong...', {id: ToastId});
         }
     }
+
     if (
         data?.SignleData === null &&
         Array.isArray(data?.chart) && data?.chart.length === 0 &&
@@ -115,8 +123,8 @@ const TokenDetails = () => {
                                 <div className="md:col-span-3 lg:col-span-1 mx-auto w-full border h-full p-5 bg-black">
                                     <form onSubmit={handleSubmit(sendPortalTransaction)} className="rounded-2xl">
                                         <div className="flex items-center gap-4">
-                                            <button onClick={() => setBuy(true)} className={`flex-1 border border-b-4 border-r-4 py-2 font-tektur text-xl border-green-500 uppercase hover:border-black ${isBuy && 'bg-green-500'}`}>Buy</button>
-                                            <button onClick={() => setBuy(false)} className={`flex-1 border border-b-4 border-r-4 py-2 font-tektur text-xl border-red-500 uppercase hover:border-black ${!isBuy && 'bg-red-500'}`}>sell</button>
+                                            <p onClick={() => setBuy(true)} className={`flex-1 border text-center cursor-pointer border-b-4 border-r-4 py-2 font-tektur text-xl border-green-500 uppercase hover:border-black ${isBuy && 'bg-green-500'}`}>Buy</p>
+                                            <p onClick={() => setBuy(false)} className={`flex-1 border text-center cursor-pointer border-b-4 border-r-4 py-2 font-tektur text-xl border-red-500 uppercase hover:border-black ${!isBuy && 'bg-red-500'}`}>sell</p>
                                         </div>
 
                                         <div className="flex justify-between items-center mt-5">

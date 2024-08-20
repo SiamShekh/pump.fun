@@ -11,12 +11,14 @@ import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ReduxStore } from './ReduxStore.jsx';
 import AppWalletProvider from './components/scripts/AppWalletProvider.jsx';
+import { Toaster } from 'react-hot-toast';
 
 const AppWrapper = () => {
   return (
     <AppWalletProvider>
       <Provider store={ReduxStore}>
         <RouterProvider router={MainRoutes} />
+        <Toaster />
       </Provider>
     </AppWalletProvider>
   );

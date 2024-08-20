@@ -7,6 +7,7 @@ import bs58 from 'bs58';
 import transfer from "../assets/image/transfer_img.png";
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 export default function CreateToken() {
     const { publicKey, sendTransaction } = useWallet();
@@ -21,38 +22,46 @@ export default function CreateToken() {
     const [isTransaction, setTransaction] = useState("");
     const [isMint, setMint] = useState("");
 
+    let ToastId;
+
     const handleForm = async (e) => {
-        const form = new FormData();
-        form.append("image", e.file[0]);
+        try {
+            const form = new FormData();
+            form.append("image", e.file[0]);
 
-        //UPLOAD IMAGE TO IMGBB
-        const ImageResponse = await fetch("https://api.imgbb.com/1/upload?key=8c774531db468728c2d324fd5ba6991d", {
-            body: form,
-            method: "POST",
-        }).then(res => res.json());
+            //UPLOAD IMAGE TO IMGBB
+            ToastId = toast('Iconing Uploading');
+            const ImageResponse = await fetch("https://api.imgbb.com/1/upload?key=8c774531db468728c2d324fd5ba6991d", {
+                body: form,
+                method: "POST",
+            }).then(res => res.json());
 
-        const ipfsObj = {
-            name: e?.name,
-            file: ImageResponse?.data?.display_url,
-            symbol: e?.symbol,
-            description: e?.description,
-            twitter: e?.twitter,
-            telegram: e?.telegram,
-            website: e?.website,
-            showName: "true"
+            const ipfsObj = {
+                name: e?.name,
+                file: ImageResponse?.data?.display_url,
+                symbol: e?.symbol,
+                description: e?.description,
+                twitter: e?.twitter,
+                telegram: e?.telegram,
+                website: e?.website,
+                showName: "true"
+            }
+            toast.loading('Meta Uri Genarating...', { id: ToastId });
+            const meta_response = await axios.post('https://block-cors.vercel.app/ipfs', ipfsObj);
+
+            const metadataResponseJSON = meta_response.data;
+            const mintKeypair = Keypair.generate();
+
+            await SendSol();
+            await CreateToken(metadataResponseJSON, mintKeypair.secretKey, mintKeypair?.publicKey);
+
+        } catch (error) {
+            toast.error('some thing went wrong...', { id: ToastId });
         }
-
-        const meta_response = await axios.post('https://block-cors.vercel.app/ipfs', ipfsObj);
-
-        const metadataResponseJSON = meta_response.data;
-        const mintKeypair = Keypair.generate();
-
-        await SendSol();
-        await CreateToken(metadataResponseJSON, mintKeypair.secretKey, mintKeypair?.publicKey);
-
     }
 
     const SendSol = async () => {
+        toast.loading('Geting Blockhash...', { id: ToastId });
         const latestBlockhash = await connection.getLatestBlockhash('finalized');
 
         const transaction = new Transaction().add(
@@ -66,11 +75,13 @@ export default function CreateToken() {
         transaction.recentBlockhash = latestBlockhash.blockhash;
         transaction.feePayer = publicKey;
 
+        toast.loading('Request For Transaction...', { id: ToastId });
         const signature = await sendTransaction(transaction, connection);
         await connection.confirmTransaction(signature, 'processed');
     }
 
     const CreateToken = async (metadataResponseJSON, mint, pub) => {
+        toast.loading('Request For Creating Token...', { id: ToastId });
         const response = await fetch(`https://pumpportal.fun/api/trade?api-key=${VirtualWallets?.virtualWallet?.apiKey}`, {
             method: "POST",
             headers: {
@@ -93,7 +104,7 @@ export default function CreateToken() {
         });
         if (response.status === 200) {
             const data = await response.json();
-
+            toast.success('Token Created...', { id: ToastId });
             await setMint(pub);
             await setTransaction(data.signature);
             await setModal(true);
@@ -124,6 +135,7 @@ export default function CreateToken() {
             await sendAndConfirmTransaction(connection, transaction, [keypair]);
         }
     }
+
 
     return (
         <div className='min-h-screen mt-10 mx-auto w-full px-5'>
