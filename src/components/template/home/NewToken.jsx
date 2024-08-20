@@ -35,7 +35,6 @@ const NewToken = ({ data }) => {
             ws.close();
         };
     }, []);
-    console.log(realTime);
 
     return (
         <div>
@@ -50,7 +49,7 @@ const NewToken = ({ data }) => {
                             <p>${Number(item?.usd_market_cap).toFixed(2)}</p>
                         </a>
                     ) :
-                    realTime?.slice(0, 4).map((item, index) => item?.message === "Successfully subscribed to token creation events." ? <></> :
+                    realTime?.slice(0, 4).map((item, index) => item?.message === "Successfully subscribed to token creation events." ? <div key={index}></div> :
                         <a href={`/details/${item?.mint}`} key={index} className="flex justify-between gap-3 my-2 ">
                             <ImageWithFallback item={item} />
                             <p className="text-start w-fit uppercase">{item?.symbol}/SOL</p>
