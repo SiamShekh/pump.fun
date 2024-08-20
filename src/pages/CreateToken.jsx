@@ -184,18 +184,18 @@ export default function CreateToken() {
                     </div>
 
                     <div className="">
-                        <input placeholder='coin name' type='file' {...register('file', { required: true })} className='text-white px-5 py-3 bg-black outline-none border w-64 md:w-full font-poppins' />
+                        <input placeholder='coin logo' type='file' {...register('file', { required: true })} className='text-white px-5 py-3 bg-black outline-none border w-64 md:w-full font-poppins' />
                     </div>
 
                     <div className="">
-                        <input placeholder='coin website' {...register('website')} className='text-white px-5 py-3 bg-black outline-none border w-64 md:w-full font-poppins' />
+                        <input placeholder='coin website (optional)' {...register('website')} className='text-white px-5 py-3 bg-black outline-none border w-64 md:w-full font-poppins' />
                     </div>
 
                     <div className="">
-                        <input placeholder='coin x(twitter)' {...register('twitter', { required: true })} className='text-white px-5 py-3 bg-black outline-none border w-64 md:w-full font-poppins' />
+                        <input placeholder='coin x(twitter) - (optional)' {...register('twitter')} className='text-white px-5 py-3 bg-black outline-none border w-64 md:w-full font-poppins' />
                     </div>
                     <div className="">
-                        <input placeholder='coin telegram' {...register('telegram', { required: true })} className='text-white px-5 py-3 bg-black outline-none border w-64 md:w-full font-poppins' />
+                        <input placeholder='coin telegram (optional)' {...register('telegram')} className='text-white px-5 py-3 bg-black outline-none border w-64 md:w-full font-poppins' />
                     </div>
                 </div>
                 <p>Tip: coin data cannot be changed after creation</p>
