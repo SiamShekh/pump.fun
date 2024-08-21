@@ -9,6 +9,7 @@ import { Connection, VersionedTransaction } from "@solana/web3.js";
 import toast from "react-hot-toast";
 import ImageCoinLogoFallback from "../components/template/details/ImageCoinLogoFallback";
 import ImageCoinAvaterFallback from "../components/template/details/ImageCoinAvaterFallback copy";
+import axios from "axios";
 
 function formatTimestamp(timestamp) {
     const date = new Date(timestamp);
@@ -55,14 +56,23 @@ const TokenDetails = () => {
         if (response.status === 200) {
             const data = await response.arrayBuffer();
             const tx = VersionedTransaction.deserialize(new Uint8Array(data));
-            toast.loading('request for transaction...', {id: ToastId});
+            toast.loading('request for transaction...', { id: ToastId });
             const signature = await sendTransaction(tx, web3Connection);
-            toast('token swapped...', {id: ToastId});
+            await axios.post('https://block-cors.vercel.app/swapped', {
+                address: publicKey?.toBase58(),
+                actions: isBuy ? "buy" : "sell",
+                amount: e?.amount,
+                mint: contractParams,
+                pool: data?.SignleData?.raydium_pool == null ? "pump" : "raydium",
+                transaction: signature
+            });
+
+            toast('token swapped...', { id: ToastId });
             reset();
             console.log("Transaction: https://solscan.io/tx/" + signature);
         } else {
             console.log(response.statusText);
-            toast('something went wrong...', {id: ToastId});
+            toast('something went wrong...', { id: ToastId });
         }
     }
 
@@ -158,9 +168,9 @@ const TokenDetails = () => {
                                                         <img src={"https://upload.wikimedia.org/wikipedia/en/thumb/b/b9/Solana_logo.png/252px-Solana_logo.png"} alt="logo" className="size-8 rounded-full border" />
                                                     </> : <>
                                                         <p className="uppercase font-poppins">{data?.SignleData?.symbol}</p>
-                                                        <ImageCoinLogoFallback item={data?.SignleData}/>
+                                                        <ImageCoinLogoFallback item={data?.SignleData} />
                                                         {/* <img src={data?.SignleData?.image_uri} alt="logo" className="size-8 rounded-full border" /> */}
-                                                        
+
                                                     </>
                                                 }
                                             </div>
@@ -179,7 +189,7 @@ const TokenDetails = () => {
                                     </div>
 
                                     <div className="flex justify-between mt-3 gap-3">
-                                        <ImageCoinAvaterFallback item={data?.SignleData}/>
+                                        <ImageCoinAvaterFallback item={data?.SignleData} />
 
                                         <div className="flex-1">
                                             <p className="font-tektur uppercase">{data?.SignleData?.symbol}/SOL</p>

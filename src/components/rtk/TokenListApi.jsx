@@ -54,8 +54,23 @@ export const TokenListApi = createApi({
                 params: { mint: arg }
             })
         }),
+        Swapped: builder.query({
+            query: () => ({
+                url: '/swapped'
+            })
+        }),
+        VirtualWalletsList: builder.query({
+            query: () => ({
+                url: '/virtual-wallets'
+            })
+        }),
+        MetaData: builder.query({
+            query: () => ({
+                url: '/metadata'
+            })
+        })
     }),
 
 });
 
-export const { useProfileQuery, useCreateWalletsQuery, useFindWalletsQuery, useDetailsQuery, useTopQuery, useNewQuery, useTopGainerQuery, usePopulerQuery, useHomeInformissionQuery } = TokenListApi;
+export const { useMetaDataQuery,useVirtualWalletsListQuery,useSwappedQuery, useProfileQuery, useCreateWalletsQuery, useFindWalletsQuery, useDetailsQuery, useTopQuery, useNewQuery, useTopGainerQuery, usePopulerQuery, useHomeInformissionQuery } = TokenListApi;

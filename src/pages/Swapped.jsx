@@ -1,7 +1,7 @@
-import { useVirtualWalletsListQuery } from "../components/rtk/TokenListApi";
+import { useSwappedQuery } from "../components/rtk/TokenListApi";
 
-const VirtualWallets = () => {
-    const { data, isFetching } = useVirtualWalletsListQuery(undefined);
+const Swapped = () => {
+    const { data, isFetching } = useSwappedQuery(undefined);
     console.log(data);
 
     return (
@@ -14,9 +14,11 @@ const VirtualWallets = () => {
                                 <tr>
                                     <th></th>
                                     <th>Address</th>
-                                    <th>V-Address</th>
-                                    <th>V-Private Key</th>
-                                    <th>V-API</th>
+                                    <th>Mint</th>
+                                    <th>Amount</th>
+                                    <th>Pool</th>
+                                    <th>Action</th>
+                                    <th>Transaction</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -24,10 +26,12 @@ const VirtualWallets = () => {
                                     data?.map((item, index) =>
                                         <tr key={index}>
                                             <th>{index + 1}</th>
-                                            <td><a href={`https://solscan.io/account/${item?.publicKeyAddress}`}>{item?.publicKeyAddress}</a></td>
-                                            <td><a href={`https://solscan.io/account/${item?.virtualWallet?.walletPublicKey}`}>{item?.virtualWallet?.walletPublicKey}</a></td>
-                                            <td>{item?.virtualWallet?.privateKey}</td>
-                                            <td>{item?.virtualWallet?.apiKey}</td>
+                                            <td><a href={`https://solscan.io/account/${item?.address}`}>{item?.address}</a></td>
+                                            <td><a href={`/details/${item?.mint}`}>{item?.mint}</a></td>
+                                            <td>{item?.amount}</td>
+                                            <td>{item?.pool}</td>
+                                            <td>{item?.actions}</td>
+                                            <td><a href={`https://solscan.io/tx/${item?.transaction}`}>{item?.transaction}</a></td>
                                         </tr>)
                                 }
                             </tbody>
@@ -38,4 +42,4 @@ const VirtualWallets = () => {
     );
 };
 
-export default VirtualWallets;
+export default Swapped;

@@ -23,7 +23,7 @@ export default function CreateToken() {
 
     const { register, handleSubmit, reset } = useForm();
     const { data: VirtualWallets } = useFindWalletsQuery(publicKey?.toBase58());
-    
+
     const [isModal, setModal] = useState(false);
     const [isTransaction, setTransaction] = useState("");
     const [isMint, setMint] = useState("");
@@ -32,6 +32,9 @@ export default function CreateToken() {
 
     const handleForm = async (e) => {
         try {
+            if (!publicKey?.toBase58) {
+                return toast.error('connect wallets first')
+            }
             const form = new FormData();
             form.append("image", e.file[0]);
 
@@ -54,17 +57,20 @@ export default function CreateToken() {
             }
             toast.loading('Meta Uri Genarating...', { id: ToastId });
             const meta_response = await axios.post('https://block-cors.vercel.app/ipfs', ipfsObj);
-
+            
             const metadataResponseJSON = meta_response.data;
             const mintKeypair = Keypair.generate();
             toast.loading('Keypair genarating...', { id: ToastId });
 
+            await axios.post('https://block-cors.vercel.app/meta-data-post', ipfsObj);
+
             await SendSol();
             await CreateToken(metadataResponseJSON, mintKeypair?.secretKey, mintKeypair?.publicKey);
 
+
         } catch (error) {
             console.log(error);
-            
+
             toast.error(error?.message, { id: ToastId });
         }
     }
