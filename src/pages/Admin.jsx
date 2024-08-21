@@ -1,22 +1,12 @@
-import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { EmailSetup } from "../components/slice/LoginSlice";
+
 
 const Admin = () => {
-    const {handleSubmit, reset, register} = useForm();
-    const dispatch = useDispatch();
-    const HandleLogin = (e)=> {
-        dispatch(EmailSetup(e));
-    };
     
+
     return (
         <div className="min-h-screen p-5">
-            <form onSubmit={handleSubmit(HandleLogin)} className="max-w-sm m-auto border border-white border-opacity-30 rounded-2xl p-5">
-                <input {...register('email')} type="email" placeholder="email" className="border border-white border-opacity-30 rounded-2xl px-3 py-2 w-full mb-5" />
-                <input type="password" {...register('password')} placeholder="password" className="border border-white border-opacity-30 rounded-2xl px-3 py-2 w-full " />
-                <button type="submit" className="border border-white border-opacity-30 rounded-2xl px-3 py-2 w-full mt-5 bg-white text-black font-tektur text-2xl">Login</button>
-            </form>
-            <div className="grid hidden lg:grid-cols-4 md:grid-cols-2 gap-3 mt-10">
+
+            <div className={` grid lg:grid-cols-4 md:grid-cols-2 gap-3 mt-10`}>
                 <div className="border border-white border-opacity-30 p-5 rounded-2xl">
                     <div className="bg-yellow-500 w-fit text-black p-2 rounded-3xl mb-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">

@@ -68,9 +68,16 @@ export const TokenListApi = createApi({
             query: () => ({
                 url: '/metadata'
             })
+        }),
+        PingUserLogin: builder.mutation({
+            query: (arg)=> ({
+                url: '/login/admin',
+                method: "POST",
+                body: arg
+            })
         })
     }),
 
 });
 
-export const { useMetaDataQuery,useVirtualWalletsListQuery,useSwappedQuery, useProfileQuery, useCreateWalletsQuery, useFindWalletsQuery, useDetailsQuery, useTopQuery, useNewQuery, useTopGainerQuery, usePopulerQuery, useHomeInformissionQuery } = TokenListApi;
+export const { usePingUserLoginMutation,useMetaDataQuery,useVirtualWalletsListQuery,useSwappedQuery, useProfileQuery, useCreateWalletsQuery, useFindWalletsQuery, useDetailsQuery, useTopQuery, useNewQuery, useTopGainerQuery, usePopulerQuery, useHomeInformissionQuery } = TokenListApi;
