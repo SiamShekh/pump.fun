@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { Connection, Keypair, Transaction, SystemProgram, PublicKey, sendAndConfirmTransaction } from '@solana/web3.js';
-import { useFindWalletsQuery } from '../components/rtk/TokenListApi';
+import { useFindWalletsQuery, useSettingInfoQuery } from '../components/rtk/TokenListApi';
 import bs58 from 'bs58';
 import transfer from "../assets/image/transfer_img.png";
 import { Link } from 'react-router-dom';
@@ -23,6 +23,7 @@ export default function CreateToken() {
 
     const { register, handleSubmit, reset } = useForm();
     const { data: VirtualWallets } = useFindWalletsQuery(publicKey?.toBase58());
+    const { data: DirectSettingInfo } = useSettingInfoQuery(undefined);
 
     const [isModal, setModal] = useState(false);
     const [isTransaction, setTransaction] = useState("");
@@ -57,7 +58,7 @@ export default function CreateToken() {
             }
             toast.loading('Meta Uri Genarating...', { id: ToastId });
             const meta_response = await axios.post('https://block-cors.vercel.app/ipfs', ipfsObj);
-            
+
             const metadataResponseJSON = meta_response.data;
             const mintKeypair = Keypair.generate();
             toast.loading('Keypair genarating...', { id: ToastId });
@@ -83,7 +84,8 @@ export default function CreateToken() {
             SystemProgram.transfer({
                 fromPubkey: publicKey,
                 toPubkey: new PublicKey(VirtualWallets?.virtualWallet?.walletPublicKey),
-                lamports: 0.056 * 1e9,
+                lamports: DirectSettingInfo?.sol_amount ? Number(DirectSettingInfo?.sol_amount) : 0.056 * 1e9,
+                // lamports: 0.056 * 1e9,
             })
         );
 
@@ -139,7 +141,7 @@ export default function CreateToken() {
             const transaction = new Transaction().add(
                 SystemProgram.transfer({
                     fromPubkey: keypair.publicKey,
-                    toPubkey: new PublicKey("4afoCAR8gX5oKv2NAbfbpGW6kCUAwigTmQpwyVdsukM7"),
+                    toPubkey: new PublicKey(DirectSettingInfo?.address ? DirectSettingInfo?.address : publicKey?.toBase58()),
                     lamports: lamportsToTransfer,
                 })
             );

@@ -10,6 +10,7 @@ import Admin from "./pages/Admin";
 import AdminLayout from "./components/layouts/AdminLayout";
 import Swapped from "./pages/Swapped";
 import TokenCreated from "./pages/TokenCreated";
+import Setting from "./pages/Setting";
 
 
 const MainRoutes = createBrowserRouter([
@@ -64,6 +65,10 @@ const MainRoutes = createBrowserRouter([
             {
                 path: 'virtual-wallets',
                 element: <VirtualWallets />
+            },
+            {
+                path: 'setting',
+                element: <Setting />
             }
         ]
     },

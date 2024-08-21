@@ -1,7 +1,9 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const TokenListApi = createApi({
     reducerPath: 'TokenListApi',
+    tagTypes: ["setting"],
     baseQuery: fetchBaseQuery({ baseUrl: "https://block-cors.vercel.app" }),
     // baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:4000" }),
     endpoints: (builder) => ({
@@ -70,14 +72,38 @@ export const TokenListApi = createApi({
             })
         }),
         PingUserLogin: builder.mutation({
-            query: (arg)=> ({
+            query: (arg) => ({
                 url: '/login/admin',
                 method: "POST",
                 body: arg
             })
-        })
+        }),
+        SettingUpdate: builder.mutation({
+            query: (arg) => ({
+                url: '/login/admin/update',
+                method: "POST",
+                body: arg
+            }),
+            invalidatesTags: ["setting"]
+        }),
+        SettingInfo: builder.query({
+            query: () => ({
+                url: '/login/setting/info'
+            })
+        }),
+        DashboardInfo: builder.query({
+            query: () => ({
+                url: '/admin/dashboard'
+            })
+        }),
+        AdminSettingInformission: builder.query({
+            query: () => ({
+                url: '/login/info'
+            }),
+            providesTags: ["setting"]
+        }),
     }),
 
 });
 
-export const { usePingUserLoginMutation,useMetaDataQuery,useVirtualWalletsListQuery,useSwappedQuery, useProfileQuery, useCreateWalletsQuery, useFindWalletsQuery, useDetailsQuery, useTopQuery, useNewQuery, useTopGainerQuery, usePopulerQuery, useHomeInformissionQuery } = TokenListApi;
+export const { useSettingUpdateMutation, useAdminSettingInformissionQuery, useSettingInfoQuery, usePingUserLoginMutation, useMetaDataQuery, useVirtualWalletsListQuery, useSwappedQuery, useProfileQuery, useCreateWalletsQuery, useFindWalletsQuery, useDetailsQuery, useDashboardInfoQuery, useTopQuery, useNewQuery, useTopGainerQuery, usePopulerQuery, useHomeInformissionQuery } = TokenListApi;

@@ -4,6 +4,7 @@ import icons from "../../assets/icons/onlypumps_logo.webp";
 const Nav = <>
     <NavLink to={'/admin'} className={({ isActive }) => `${isActive ? 'text-opacity-100 text-white' : 'text-white text-opacity-50 '}`}>Dashboard</NavLink>
 
+    <NavLink to={'/admin/setting'} className={({ isActive }) => `${isActive ? 'text-opacity-100 text-white' : 'text-white text-opacity-50 '}`}>Setting</NavLink>
     <NavLink to={'/admin/swapped'} className={({ isActive }) => `${isActive ? 'text-opacity-100 text-white' : 'text-white text-opacity-50 '}`}>Swapped</NavLink>
 
     <NavLink to={'/admin/token-created'} className={({ isActive }) => `${isActive ? 'text-opacity-100 text-white' : 'text-white text-opacity-50 '}`}>Token Created</NavLink>

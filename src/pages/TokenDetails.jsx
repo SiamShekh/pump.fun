@@ -90,6 +90,13 @@ const TokenDetails = () => {
         return (
             <div className="mt-10 px-5">
 
+                {
+                    data?.SignleData?.raydium_pool === null ? <div></div> :
+                        <div className="px-7 py-2 rounded-2xl my-5 bg-[#86EFAC] text-black w-fit">
+                            <p className="capitalize">raydium pool seeded! view the coin on raydium <a href={`https://www.geckoterminal.com/solana/pools/${data?.SignleData?.raydium_pool}`} className="text-blue-500 underline">here</a></p>
+                        </div>
+                }
+
                 <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-3  lg:justify-center items-center lg:items-start">
                     {
                         isFetching ? <>
@@ -98,6 +105,7 @@ const TokenDetails = () => {
                             <div className="skeleton h-64 md:col-span-3 lg:col-span-1 "></div>
                         </> :
                             <>
+
                                 <div className="border overflow-hidden p-3 h-fit bg-black">
                                     <p className="font-tektur underline">Order Book</p>
                                     <div className="overflow-x-auto">
@@ -128,7 +136,7 @@ const TokenDetails = () => {
                                     <div className="flex gap-3 text-black font-poppins p-3">
                                         <p className="capitalize">{data?.SignleData?.name}</p>
                                         <p className="capitalize">Symbol: {data?.SignleData?.symbol}</p>
-                                        <p className="capitalize">Marketcup: {Number(data?.SignleData?.market_cap).toFixed(2)} SOL</p>
+                                        <p className="capitalize">Marketcap: {Number(data?.SignleData?.market_cap).toFixed(2)} SOL</p>
                                     </div>
                                     <TradingChart data={data?.chart} isFetching={isFetching} />
                                 </div>
