@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import icons from "../../assets/icons/onlypumps_logo.webp";
 
 const Nav = <>
@@ -38,7 +38,9 @@ const AdminNavbar = () => {
                     </ul>
                 </div>
 
-                <img src={icons} alt="logos" className="w-20 md:block hidden" />
+                <Link to={'/'}>
+                    <img src={icons} alt="logos" className="w-20 md:block hidden" />
+                </Link>
                 <div className="md:flex items-center gap-5 hidden">
                     {Nav}
                 </div>

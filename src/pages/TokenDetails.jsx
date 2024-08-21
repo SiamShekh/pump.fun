@@ -91,10 +91,9 @@ const TokenDetails = () => {
             <div className="mt-10 px-5">
 
                 {
-                    data?.SignleData?.raydium_pool === null ? <div></div> :
-                        <div className="px-7 py-2 rounded-2xl my-5 bg-[#86EFAC] text-black w-fit">
-                            <p className="capitalize">raydium pool seeded! view the coin on raydium <a href={`https://www.geckoterminal.com/solana/pools/${data?.SignleData?.raydium_pool}`} className="text-blue-500 underline">here</a></p>
-                        </div>
+                    <div className={`px-7 py-2 rounded-2xl my-5 bg-[#86EFAC] text-black w-fit ${data?.SignleData?.raydium_pool === null ? 'hidden' : 'block'}`}>
+                        <p className="capitalize">raydium pool seeded! view the coin on raydium <a href={`https://www.geckoterminal.com/solana/pools/${data?.SignleData?.raydium_pool}`} className="text-blue-500 underline">here</a></p>
+                    </div>
                 }
 
                 <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-3  lg:justify-center items-center lg:items-start">

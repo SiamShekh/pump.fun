@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import hero_image from "../assets/image/dog-look-at-me.webp";
+import hero_image from "../assets/icons/onlypumps_logo.webp";
 import ForYou from "../components/template/home/ForYou";
 import NewToken from "../components/template/home/NewToken";
 import Populer from "../components/template/home/Populer";
