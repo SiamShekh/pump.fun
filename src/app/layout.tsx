@@ -23,11 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div suppressHydrationWarning={false}>
           <AppWalletProvider >
-            <Provider store={WalletStore}>
-              <PersistGate persistor={persistor}>
-                {children}
-              </PersistGate>
-            </Provider>
+            {children}
           </AppWalletProvider>
         </div>
       </body>

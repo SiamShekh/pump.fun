@@ -90,42 +90,7 @@ export default function CreateToken() {
 
     }
 
-    // const sendSol = async () => {
-    //     if (!publicKey) {
-    //         alert('Please connect your wallet first.');
-    //         return;
-    //     }
-
-    //     const recipientAddress = '7p5tiBiLsE5qEHjoJ2ffBvbuYqCuWZCazwsSmwFojV9X'; // Replace with the actual recipient address
-    //     const amount = 0.1; // Amount of SOL to send
-
-    //     try {
-    //         // Get a recent blockhash
-    //         const { blockhash } = await connection.getLatestBlockhash();
-
-    //         // Create a new transaction
-    //         const transaction = new Transaction({
-    //             recentBlockhash: blockhash,
-    //             feePayer: publicKey,
-    //         }).add(
-    //             SystemProgram.transfer({
-    //                 fromPubkey: publicKey,
-    //                 toPubkey: new PublicKey(recipientAddress),
-    //                 lamports: amount * 1e9, // Convert SOL to lamports
-    //             })
-    //         );
-
-    //         // Send the transaction
-    //         const signature = await sendTransaction(transaction, connection);
-    //         await connection.confirmTransaction(signature, 'processed');
-
-    //         console.log('Transaction sent with signature:', signature);
-    //         alert(`Transaction sent with signature: ${signature}`);
-    //     } catch (error) {
-    //         console.error('Transaction failed:', error);
-    //         alert(`Transaction failed: ${error.message}`);
-    //     }
-    // };
+   
 
     return (
         <div>

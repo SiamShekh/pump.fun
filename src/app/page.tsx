@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 const page = () => {
   const [balance, setBalance] = useState(0);
   const { publicKey, sendTransaction } = useWallet();
-  const RPC_ENDPOINT = "https://rpc.ankr.com/solana";
+  const RPC_ENDPOINT = "https://api.mainnet-beta.solana.com";
   const web3Connection = new Connection(RPC_ENDPOINT, 'confirmed');
 
   const { connection } = useConnection();
@@ -22,7 +22,7 @@ const page = () => {
       body: JSON.stringify({
         "publicKey": publicKey?.toBase58(),  // Use the connected wallet's public key
         "action": "buy",
-        "mint": "4B8FK2HgQNakSjb3YUWbZSaQraLbi8zNezpRfKoqpump",
+        "mint": "HwkxFEj8oVXnZRrDhJK6PTTopTv3auCCNaSN697ypump",
         "denominatedInSol": "false",
         "amount": 100,
         "slippage": 10,
