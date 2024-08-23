@@ -20,7 +20,7 @@ const page = () => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        "publicKey": publicKey?.toBase58(),  // Use the connected wallet's public key
+        "publicKey": publicKey?.toBase58(),  
         "action": "buy",
         "mint": "HwkxFEj8oVXnZRrDhJK6PTTopTv3auCCNaSN697ypump",
         "denominatedInSol": "false",
