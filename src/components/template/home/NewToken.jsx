@@ -3,8 +3,8 @@ import ImageWithFallback from "./ImageFallbackHome";
 import "../home/Text_Colors.css";
 
 const NewToken = ({ data }) => {
-    const [realTime, setRealTime] = useState([]);
     const [animate, setAnimate] = useState(false); 
+    const [realTime, setRealTime] = useState([]);
 
     useEffect(() => {
         const ws = new WebSocket('wss://pumpportal.fun/api/data');

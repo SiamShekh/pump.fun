@@ -1,5 +1,6 @@
 import ImageWithFallback from "./ImageFallbackHome";
 import "../home/Text_Colors.css";
+import { useEffect, useState } from "react";
 
 const ForYou = ({ data }) => {
 
@@ -20,6 +21,47 @@ const ForYou = ({ data }) => {
         return formattedTime;
     }
 
+    const [list, setList] = useState(data);
+
+    useEffect(() => {
+        const ws = new WebSocket('wss://frontend-api.pump.fun/socket.io/?EIO=4&transport=websocket');
+
+        ws.onopen = function open() {
+            ws.send("40");
+        };
+
+        ws.onmessage = function message(event) {
+            try {
+                const data = event.data.slice(2);
+
+                const parsedArray = JSON.parse(data);
+                const eventName = parsedArray[0];
+                const parsedData = parsedArray[1];
+
+                if (eventName === 'tradeCreated') {
+                    setList([parsedData, ...list, data]);
+                }
+
+            } catch (error) {
+                // console.error("Failed to parse WebSocket message:", event.data);
+            }
+        };
+
+        ws.onerror = function error(err) {
+            // console.error("WebSocket encountered an error:", err.message);
+        };
+
+        ws.onclose = function close() {
+            // console.log("WebSocket connection closed");
+        };
+
+        return () => {
+            ws.close();
+        };
+    }, [list]);
+
+    console.log(list);
+
     return (
         <div>
             <div className="border border-white border-opacity-30 rounded-2xl px-5 py-2">
@@ -39,7 +81,7 @@ const ForYou = ({ data }) => {
                         </thead>
                         <tbody>
                             {
-                                data?.map((item, index) =>
+                                list?.slice(0,50)?.map((item, index) =>
                                     <tr key={index} className="font-poppins">
                                         <td>
                                             <div className="flex items-center gap-3">
