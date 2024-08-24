@@ -1,4 +1,5 @@
 import ImageWithFallback from "./ImageFallbackHome";
+import "../home/Text_Colors.css";
 
 const ForYou = ({ data }) => {
 
@@ -45,8 +46,8 @@ const ForYou = ({ data }) => {
                                                 <ImageWithFallback item={item} />
 
                                                 <div>
-                                                    <div className="font-bold uppercase">{item?.symbol}</div>
-                                                    <div className="text-sm opacity-50">{item?.name}</div>
+                                                    <div className="font-bold uppercase animated-text">{item?.symbol}</div>
+                                                    <div className="text-sm opacity-50 animated-text">{item?.name}</div>
                                                 </div>
                                             </div>
                                         </td>

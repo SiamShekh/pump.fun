@@ -8,17 +8,46 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import LastTradeCoin from "../components/template/home/LastTradeCoin";
 import LastReplyCoin from "../components/template/home/LastReplyCoin";
+import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
+import MarqueeInput from "../components/template/home/MarqueeInput";
+
+
 
 const Home = () => {
     const { data, isFetching } = useHomeInformissionQuery(undefined);
     const { handleSubmit, register } = useForm();
+    const [placeholder, setPlaceholder] = useState("");
+
     const navigate = useNavigate();
     const HandleSearch = e => {
-        navigate(`/details/${e.search}`)
+        if (e.search) {
+            navigate(`/details/${e.search}`);
+        } else {
+            toast.error("search any contract address")
+        }
     }
 
 
+    useEffect(() => {
+        const placeholders = [
+            "7aaukTR4rZdMiTWK3kCLy3xJq61GnpY1ZicXrMhYo6JT",
+            "38JmzLhSZ9yczLhW7ogoNnsbHmu5eNSEZzDP4CE3tXkK",
+            "9EvotVhzGfrRt9yqMyUfC9ae9PUr2Zgabv8uQAqpump"
+        ];
 
+        let currentIndex = 0;
+
+        const updatePlaceholder = () => {
+            setPlaceholder(placeholders[currentIndex]);
+            currentIndex = (currentIndex + 1) % placeholders.length;
+        };
+
+        updatePlaceholder(); // Set initial placeholder
+        const interval = setInterval(updatePlaceholder, 500); // Update every 500ms
+
+        return () => clearInterval(interval); // Cleanup interval on component unmount
+    }, []);
 
     return (
         <div>
@@ -36,8 +65,8 @@ const Home = () => {
                     </div>
                     <div className="col-span-2">
                         <p className="px-5 font-tektur md:text-5xl text-2xl  md:px-0 font-bold mb-5">Search by Contract </p>
-                        <form onSubmit={handleSubmit(HandleSearch)} className="border rounded-2xl px-7 py-3 w-full flex justify-between" >
-                            <input type="text" {...register('search')} placeholder="search" className="bg-transparent lg:w-fit w-[60vw] font-tektur outline-none " />
+                        <form onSubmit={handleSubmit(HandleSearch)} className="border rounded-2xl px-7 py-3 w-full flex justify-between items-center" >
+                        <MarqueeInput />
 
                             <button type="submit" className="md:btn md:rounded-full">
                                 <svg xmlns="https://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -47,7 +76,7 @@ const Home = () => {
                         </form>
                     </div>
                     <div className="">
-                        <LastReplyCoin/>
+                        <LastReplyCoin />
                     </div>
 
                 </div>

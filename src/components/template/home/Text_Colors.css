@@ -1,0 +1,42 @@
+/* Keyframes for the text color change with multiple colors */
+@keyframes textColorChange {
+    0% {
+      color: #FFFFFF; /* White */
+    }
+    10% {
+      color: #FFD700; /* Gold */
+    }
+    20% {
+      color: #00FF00; /* Lime Green */
+    }
+    30% {
+      color: #FF00FF; /* Magenta */
+    }
+    40% {
+      color: #00FFFF; /* Cyan */
+    }
+    50% {
+      color: #FF4500; /* Orange Red */
+    }
+    60% {
+      color: #8A2BE2; /* Blue Violet */
+    }
+    70% {
+      color: #FFFF00; /* Yellow */
+    }
+    80% {
+      color: #1E90FF; /* Dodger Blue */
+    }
+    90% {
+      color: #FF1493; /* Deep Pink */
+    }
+    100% {
+      color: #FFFFFF; /* White */
+    }
+  }
+  
+  /* Class to apply the animation */
+  .animated-text {
+    animation: textColorChange 6s infinite; /* 6 seconds for a full cycle */
+  }
+  

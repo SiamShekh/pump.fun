@@ -1,4 +1,5 @@
 import ImageWithFallback from "./ImageFallbackHome";
+import "../home/Text_Colors.css";
 
 const Populer = ({ data }) => {
     return (
@@ -9,7 +10,7 @@ const Populer = ({ data }) => {
                     data?.slice(0, 4).map((item, index) =>
                         <a href={`/details/${item?.mint}`} key={index} className="flex justify-between gap-3 my-2 ">
                             <ImageWithFallback item={item} />
-                            <p className="text-start w-fit uppercase">{item?.symbol}/SOL</p>
+                            <p className="text-start w-fit uppercase animated-text">{item?.symbol}/SOL</p>
                             <p>${Number(item?.usd_market_cap).toFixed(2)}</p>
                         </a>
                     )

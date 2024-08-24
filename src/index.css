@@ -83,3 +83,31 @@
     animation-iteration-count: 6, 1;
     /* Shake 6 times (0.5s each), and change background color once over 3s */
 }
+
+/* Base styling for the input */
+.animated-placeholder-input {
+    background-color: transparent;
+    font-family: 'Tektur', sans-serif;
+    outline: none;
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+  }
+  
+  /* Marquee animation */
+  @keyframes marquee {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  /* Marquee wrapper for animation */
+  .marquee-wrapper {
+    display: inline-block;
+    padding-left: 100%; /* Start the animation from outside the input */
+    animation: marquee 10s linear infinite; /* Adjust the duration as needed */
+  }
+  

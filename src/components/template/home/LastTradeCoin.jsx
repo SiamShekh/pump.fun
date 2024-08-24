@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import ImageProfileFallback from "../profile/ImageProfileFallback";
 import { Link } from "react-router-dom";
+import "../home/Text_Colors.css";
+
 const LastTradeCoin = () => {
     const [data, setData] = useState({});
     const [animate, setAnimate] = useState(false);
@@ -53,7 +55,7 @@ const LastTradeCoin = () => {
                 <div className="flex gap-3 items-center mb-5">
                     <ImageProfileFallback item={data} />
                     <div className="">
-                        <p className="font-tektur text-xl text-black line-clamp-1">{data?.name}</p>
+                        <p className="font-tektur text-xl text-black animated-text line-clamp-1">{data?.name}</p>
                         <p className="font-poppins line-clamp-1">{data?.symbol}</p>
                     </div>
                 </div>

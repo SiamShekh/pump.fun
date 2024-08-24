@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ImageWithFallback from "./ImageFallbackHome";
+import "../home/Text_Colors.css";
 
 const NewToken = ({ data }) => {
     const [realTime, setRealTime] = useState([]);
@@ -45,14 +46,14 @@ const NewToken = ({ data }) => {
                     data?.slice(0, 4).map((item, index) =>
                         <a href={`/details/${item?.mint}`} key={index} className="flex justify-between gap-3 my-2 ">
                             <ImageWithFallback item={item} />
-                            <p className="text-start w-fit uppercase">{item?.symbol}/SOL</p>
+                            <p className="text-start w-fit uppercase animated-text">{item?.symbol}/SOL</p>
                             <p>${Number(item?.usd_market_cap).toFixed(2)}</p>
                         </a>
                     ) :
                     realTime?.slice(0, 4).map((item, index) => item?.message === "Successfully subscribed to token creation events." ? <div key={index}></div> :
                         <a href={`/details/${item?.mint}`} key={index} className="flex justify-between gap-3 my-2 ">
                             <ImageWithFallback item={item} />
-                            <p className="text-start w-fit uppercase">{item?.symbol}/SOL</p>
+                            <p className="text-start w-fit uppercase animated-text">{item?.symbol}/SOL</p>
                             <p>{Number(item?.marketCapSol).toFixed(2)} SOL</p>
                         </a>
                     )
