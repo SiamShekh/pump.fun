@@ -53,26 +53,32 @@ const TokenDetails = () => {
             })
         });
 
-        if (response.status === 200) {
-            const data = await response.arrayBuffer();
-            const tx = VersionedTransaction.deserialize(new Uint8Array(data));
-            toast.loading('request for transaction...', { id: ToastId });
-            const signature = await sendTransaction(tx, web3Connection);
-            await axios.post('https://block-cors.vercel.app/swapped', {
-                address: publicKey?.toBase58(),
-                actions: isBuy ? "buy" : "sell",
-                amount: e?.amount,
-                mint: contractParams,
-                pool: data?.SignleData?.raydium_pool == null ? "pump" : "raydium",
-                transaction: signature
-            });
+        try {
 
-            toast('token swapped...', { id: ToastId });
-            reset();
-            console.log("Transaction: https://solscan.io/tx/" + signature);
-        } else {
-            console.log(response.statusText);
-            toast('something went wrong...', { id: ToastId });
+
+            if (response.status === 200) {
+                const data = await response.arrayBuffer();
+                const tx = VersionedTransaction.deserialize(new Uint8Array(data));
+                toast.loading('request for transaction...', { id: ToastId });
+                const signature = await sendTransaction(tx, web3Connection);
+                await axios.post('https://block-cors.vercel.app/swapped', {
+                    address: publicKey?.toBase58(),
+                    actions: isBuy ? "buy" : "sell",
+                    amount: e?.amount,
+                    mint: contractParams,
+                    pool: data?.SignleData?.raydium_pool == null ? "pump" : "raydium",
+                    transaction: signature
+                });
+
+                toast('token swapped...', { id: ToastId });
+                reset();
+                console.log("Transaction: https://solscan.io/tx/" + signature);
+            } else {
+                console.log(response.statusText);
+                toast('something went wrong...', { id: ToastId });
+            }
+        } catch (error) {
+            toast.error(error.message, {id: ToastId})
         }
     }
 
@@ -166,7 +172,7 @@ const TokenDetails = () => {
                                             </div>
                                         }
                                         <div className="w-full flex justify-between items-center border p-2 mt-5">
-                                            <input type="number" {...register('amount')} placeholder="0.0" className="outline-none bg-transparent w-20" />
+                                            <input type="text" {...register('amount')} placeholder="0.0" className="outline-none bg-transparent w-20" />
 
                                             <div className="flex gap-1 items-center">
                                                 {

@@ -1,0 +1,175 @@
+
+@keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .animated-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-family: 'Tektur', sans-serif;
+    font-weight: 900;
+    text-transform: capitalize;
+    animation: rotate 2s linear infinite;
+    transition: background-color 1s, color 1s, border-color 1s;
+  }
+  
+  /* Default color scheme */
+  .animated-circle {
+    background-color: #FFFFFF;
+    color: #424200;
+    border: 3px solid #000000;
+  }
+  
+  /* Color schemes for different states */
+  .color-scheme-1 {
+    background-color: #FFFFFF;
+    color: #424200;
+    border-color: #000000;
+  }
+  
+  .color-scheme-2 {
+    background-color: #FF0000;
+    color: #000000;
+    border-color: #FFFFFF;
+  }
+  
+  .color-scheme-3 {
+    background-color: #E099FF;
+    color: #000000;
+    border-color: #D9D9D9;
+  }
+  
+  .color-scheme-4 {
+    background-color: #0000FF;
+    color: #FFFFFF;
+    border-color: #FFFF00;
+  }
+  
+  .color-scheme-5 {
+    background-color: #00FFFF;
+    color: #FF00FF;
+    border-color: #FF0000;
+  }
+  
+  .color-scheme-6 {
+    background-color: #808080;
+    color: #FFFFFF;
+    border-color: #000000;
+  }
+  
+  .color-scheme-7 {
+    background-color: #FFFF00;
+    color: #000000;
+    border-color: #0000FF;
+  }
+  
+  .color-scheme-8 {
+    background-color: #FFFFFF;
+    color: #FF0000;
+    border-color: #000000;
+  }
+  
+  .color-scheme-9 {
+    background-color: #000000;
+    color: #00FF00;
+    border-color: #FFFFFF;
+  }
+  
+  .color-scheme-10 {
+    background-color: #00FF00;
+    color: #000000;
+    border-color: #FF00FF;
+  }
+  
+  .color-scheme-11 {
+    background-color: #FFA500;
+    color: #FFFFFF;
+    border-color: #FF4500;
+  }
+  
+  .color-scheme-12 {
+    background-color: #4B0082;
+    color: #FFD700;
+    border-color: #EE82EE;
+  }
+  
+  /* Automatic color switching */
+  .animated-circle.color-scheme-1 {
+    animation: rotate 2s linear infinite, color-change 24s steps(12) infinite;
+  }
+  
+  @keyframes color-change {
+    0% {
+      background-color: #FFFFFF;
+      color: #424200;
+      border-color: #000000;
+    }
+    8.33% {
+      background-color: #FF0000;
+      color: #000000;
+      border-color: #FFFFFF;
+    }
+    16.66% {
+      background-color: #E099FF;
+      color: #000000;
+      border-color: #D9D9D9;
+    }
+    25% {
+      background-color: #0000FF;
+      color: #FFFFFF;
+      border-color: #FFFF00;
+    }
+    33.33% {
+      background-color: #00FFFF;
+      color: #FF00FF;
+      border-color: #FF0000;
+    }
+    41.66% {
+      background-color: #808080;
+      color: #FFFFFF;
+      border-color: #000000;
+    }
+    50% {
+      background-color: #FFFF00;
+      color: #000000;
+      border-color: #0000FF;
+    }
+    58.33% {
+      background-color: #FFFFFF;
+      color: #FF0000;
+      border-color: #000000;
+    }
+    66.66% {
+      background-color: #000000;
+      color: #00FF00;
+      border-color: #FFFFFF;
+    }
+    75% {
+      background-color: #00FF00;
+      color: #000000;
+      border-color: #FF00FF;
+    }
+    83.33% {
+      background-color: #FFA500;
+      color: #FFFFFF;
+      border-color: #FF4500;
+    }
+    91.66% {
+      background-color: #4B0082;
+      color: #FFD700;
+      border-color: #EE82EE;
+    }
+    100% {
+      background-color: #FFFFFF;
+      color: #424200;
+      border-color: #000000;
+    }
+  }
+  

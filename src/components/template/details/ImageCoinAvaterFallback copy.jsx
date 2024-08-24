@@ -14,7 +14,7 @@ function ImageCoinAvaterFallback({ item }) {
                 <div className="avatar">
                     <div className="mask mask-squircle w-16">
                         <img
-                            src={`${item?.image_uri}?url=%2Fcoins%2Fmax.png&w=32&q=75`}
+                            src={`https://pump.mypinata.cloud/ipfs/${item?.image_uri.split("https://cf-ipfs.com/ipfs/")[1]}?img-width=20&img-dpr=2&img-onerror=redirect`}
                             alt=""
                             onError={() => setImgError(true)}
                         />
